@@ -1,0 +1,153 @@
+.container{
+  width:100%;
+  height: calc(100% - 80px);
+  display: flex;
+  flex-direction: column;
+}
+.container .chat-box{
+  /*border: 1px solid black;*/
+  /*height: 100%;*/
+  flex:1;
+  padding: 2rem;
+  display: flex;
+}
+
+.container .chat-box .chat-block-left{
+  /*border: 1px solid black;*/
+  width:33%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+.container .chat-box .chat-block-mid{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*border: 1px solid black;*/
+  width:33%;
+}
+.container .chat-box .chat-block-right{
+  /*border: 1px solid black;*/
+  width:33%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
+.container .chat-box .chat-block .chat-inline-null{
+  height: 30px;
+  /*border: 1px solid black;*/
+  display: inline-block;
+  padding-right: 1.2rem;
+  padding-left: 1.2rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  border-radius: 18px;
+}
+.container .chat-box .chat-block .chat-inline{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  height: 30px;
+  /*border: 1px solid black;*/
+  display: inline-block;
+  padding-right: 1.2rem;
+  padding-left: 1.2rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  border-radius: 18px;
+}
+.container .chat-box .chat-block .chat-inline .chat-index{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 13pt;
+}
+.container .chat-box .chat-block-left .chat-inline{
+  background-color: #f7f8fa;
+}
+.container .chat-box .chat-block-left .chat-inline .chat-index{
+  color:#4f4f4f;
+}
+.container .chat-box .chat-block-right .chat-inline{
+  background-color: #e3354e;
+}
+.container .chat-box .chat-block-right .chat-inline .chat-index{
+  color:#fff;
+}
+.container .chat-box .chat-block-mid .mid-icon-box{
+  /*border: 1px solid black;*/
+  display: flex;
+
+}
+.container .chat-box .chat-block-mid .mid-icon-box .mid-icon{
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+.container .chat-box .chat-block-mid .mid-icon-box .mid-icon img{
+  width:30px;
+  height: auto;
+}
+.container .chat-input-item{
+  /*border: 1px solid black;*/
+  /*height: 100%;*/
+  flex-basis: 50px;
+  /*padding: 2rem;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+}
+.container .chat-input-item div{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.container .chat-input-item .mic img{
+  width:20px;
+  height: auto;
+  cursor: pointer;
+}
+.container .chat-input-item .key img{
+  width:25px;
+  height: auto;
+  cursor: pointer;
+}
+
+.container .chat-input-box{
+  border: 1px solid rgb(219, 219, 219);
+  /*height: 80px;*/
+  display: flex;
+  align-items: center;
+  flex-basis: 80px;
+}
+
+.container .chat-input-box input{
+  outline: none;
+  border: none;
+  height: 90%;
+  font-size: 15pt;
+  color: #2f2f2f;
+  padding-left: 1rem;
+  width:100%;
+}
+::-webkit-input-placeholder { /* Chrome */
+  color: rgb(219, 219, 219);
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: rgb(219, 219, 219);
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: rgb(219, 219, 219);
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: rgb(219, 219, 219);
+  opacity: 1;
+}
+
+.container .chat-input-box .send-button{
+  padding-right: 1.5rem;
+}
+.container .chat-input-box .send-button img{
+  width:30px;
+  height: auto;
+  cursor: pointer;
+}

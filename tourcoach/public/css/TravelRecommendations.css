@@ -1,0 +1,134 @@
+.container{
+  padding: 1.5rem;
+}
+.container .head-title{
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.container .head-title img{
+  width: 200px;
+  height: auto;
+}
+.container .head-title div{
+  font-size: 9pt;
+  margin-top: 0.3rem;
+}
+.bottom-card{
+  border-radius: 10px;
+}
+.card{
+
+  border-radius: 10px;
+  margin-top: 5rem;
+  box-shadow: 2px 2px 20px 1px gray;
+  padding: 1.5rem;
+
+}
+.oneCard{
+  background-color: #ffb742;
+}
+.twoCard{
+  background-color: #b0bfc6;
+}
+.threeCard{
+  background-color: #bdaaa4;
+}
+.card .card-title{
+  font-size: 24pt;
+  font-weight: 600;
+  text-align: center;
+  color:#3c3c3c;
+}
+.card .card-subTitle{
+  font-size: 15pt;
+  font-weight: 500;
+  text-align: center;
+  color:#fff;
+  margin-top: 0.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid white;
+}
+.normalCard .card-subTitle{
+  color:#c2c2c2;
+  border-bottom: 1px solid #c2c2c2;
+}
+.card .card-index{
+  /*border: 1px solid black;*/
+  margin-top: 1.3em;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+.card .card-index .card-left{
+
+}
+.card .card-left .card-info{
+  /*border: 1px solid black;*/
+  margin-bottom: 2rem;
+}
+.card .card-left .card-info .info-title{
+  display: flex;
+  align-items: flex-end;
+}
+.card .card-left .card-info .info-title .title{
+  font-size: 15pt;
+  color:#3c3c3c;
+}
+.card .card-left .card-info .info-title .subTitle{
+  color:white;
+  margin-left: 0.5rem;
+  font-size: 13pt;
+}
+.normalCard .card-left .card-info .info-title .subTitle{
+  color:#c2c2c2;
+}
+.card .card-left .card-info .info-index{
+  margin-top: 0.5rem;
+  font-size: 13pt;
+  color: #3c3c3c;
+}
+.card .card-right{
+
+}
+.card .card-right img{
+  width:350px;
+  height: auto;
+  margin-left: 0.4rem;
+}
+
+.bottom-card{
+  box-shadow: 2px 2px 20px 1px gray;
+  margin-top: 1rem;
+  display: flex;
+  padding: 1.5rem;
+  justify-content: space-between;
+}
+.bottom-card .card-list{
+  /*flex:1;*/
+}
+.bottom-card .card-list .card-title{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.bottom-card .card-list .card-title .title{
+  font-size: 14pt;
+  color: #3c3c3c;
+}
+.bottom-card .card-list .card-title .subTitle{
+  font-size: 12pt;
+  margin-left: 0.3rem;
+  color:white;
+}
+.normalCard .card-list .card-title .subTitle{
+  color:#c2c2c2;
+}
+.bottom-card .card-list .index{
+  margin-top: 0.7rem;
+}
+.bottom-card .card-list .index img{
+  width:20px;
+  height: auto;
+}
