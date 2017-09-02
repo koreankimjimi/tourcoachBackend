@@ -77,7 +77,7 @@
         FB.login(function(response) {
             // handle the response
             console.log(response);
-        }, {scope: 'email,user_likes,pages_messaging,pages_messaging_subscriptions,pages_messaging_payments'});
+        }, {scope: 'email,user_likes,pages_messaging'});
     }
 
 </script>

@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="/js/jquery-1.11.1.js"></script>
+
     <title>TourCoach</title>
 
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/Kjm.css">
     @stack('css')
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
@@ -30,7 +30,7 @@
     <meta property="og:description" content="2017 STAC AI 부분 출품작">
 
     <meta charset="utf-8">
-    
+
     <link rel="image_src" href="/img/favicon/favicon.ico">
     <link rel="shortcut icon" href="/img/favicon/favicon.ico">
     <link rel="apple-touch-icon" href="/img/favicon/favicon.ico">
@@ -48,20 +48,22 @@
     </div>
     <nav>
         <div class="nav-box">
-            분야별 여행지
+            <a href="/tour/cateSearch">분야별 여행지</a>
         </div>
         <div class="nav-box">
-            마이페이지
+            <a href="/user/join">회원가입</a>
         </div>
         <div class="nav-box">
-            로그인
+            <a href="/user/login">로그인</a>
+
         </div>
     </nav>
 </header>
 
-
-
     {{-- 유동 섹션 --}}
     @yield('content')
+    <script src="/js/jquery-1.11.1.js"></script>
+    <script src="/js/main.js"></script>
+    @stack('js')
 </body>
 </html>

@@ -1,0 +1,116 @@
+body{
+  background-color: lightgray;
+}
+.container{
+  padding: 1rem;
+  margin-top: 1rem;
+  background-color: white;
+}
+.container .travel-box .title-box{
+  margin-bottom: 2rem;
+}
+.container .travel-box .title-box .main-title img{
+  width:150px;
+  height: auto;
+}
+.container .travel-box .title-box .sub-title{
+  font-size: 9pt;
+}
+.travel-box-side{
+  /*margin-top: 3rem;*/
+}
+.travel-box-side .title-box{
+  /*margin-bottom: 2rem;*/
+  padding-left: 2rem;
+}
+.travel-box-side .title-box .main-title img{
+  width:150px;
+  height: auto;
+}
+.travel-box-side .title-box .sub-title{
+  font-size: 9pt;
+}
+.container .info-box .social{
+  /*border: 1px solid black;*/
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+.container .info-box .social .social-box .social-text{
+  font-size: 14pt;
+  margin-left: 1.2rem;
+  font-weight: 600;
+}
+.container .info-box .social .social-box{
+  /*border: 1px solid black;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:49%;
+  height: 120px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 20px 1px gray;
+  cursor: pointer;
+
+}
+.container .info-box .social .kakao{
+  background-color: #ffe617;
+
+}
+.container .info-box .social .kakao .social-text{
+  color:#47292b;
+
+}
+.container .info-box .social .fb .social-text{
+  color:white;
+}
+.container .info-box .social .fb{
+  background-color: #3c5b8b
+}
+.container .info-box .social .social-box img{
+  height: 70px;
+  width:auto;
+}
+
+.container .review-box{
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+}
+.container .review-box .review-section{
+  box-shadow: 2px 2px 20px 1px gray;
+  /*border: 1px solid black;*/
+  padding: 1.8rem;
+}
+.container .review-box .review-section .review-list{
+  border-bottom: 1px solid #c2c2c2;
+}
+.container .review-box .review-section .review-list .review-title{
+  font-size: 14pt;
+  color:#3c3c3c;
+  font-weight: 600;
+}
+.container .review-box .review-section .review-list .review-sub{
+  display: flex;
+  margin-top: 0.2rem;
+}
+.container .review-box .review-section .review-list .review-sub .review-date{
+  font-size: 12pt;
+  color:#c2c2c2;
+}
+.container .review-box .review-section .review-list .review-index{
+  margin-top: 1rem;
+  color: #3c3c3c;
+  font-size: 12pt;
+  padding-bottom: 1.8rem;
+}
+@media (max-width : 650px){
+  .container .info-box .social{
+    /*border: 1px solid black;*/
+    display: flex;
+    flex-direction: column;
+  }
+  .container .info-box .social .social-box{
+    width:100%;
+    margin-bottom: 1rem;
+  }
+}

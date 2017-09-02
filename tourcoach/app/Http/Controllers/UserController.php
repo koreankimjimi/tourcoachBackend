@@ -17,11 +17,11 @@ class UserController extends Controller
             $user = UserModel::where([ ['userid' , '=' ,$inputId ] ])->first();
 
             if( !$user ){
-                return back()->with('err','아이디를 다시입력해주세요.')->withInput();
+                return back()->withErrors(array('Iderr' => '아이디를 다시입력해주세요.'))->withInput();
             }
 
             if( ! \Hash::check( $inputPass ,  $user->userpass) ){
-                return back()->with('err','비밀번호를 다시입력해주세요')->withInput();
+                return back()->withErrors(array('Pwerr' => '비밀번호를 다시입력해주세요'))->withInput();
             }
 
 
@@ -65,11 +65,12 @@ class UserController extends Controller
         if( $req->all() ){
             $userid = $req->input('userid');
             $useremail = $req->input('useremail');
-            $passquestion = $req->input('passquestion');
-            $passanswer = $req->input('passanswer');
+            $username = $req->input('username');
+//            $passquestion = $req->input('passquestion');
+//            $passanswer = $req->input('passanswer');
 
 
-            $user = UserModel::where([['userid', '=', $userid], ['useremail', '=', $useremail] , ['passquestion' , '=' , $passquestion] , ['passanswer' , '=' , $passanswer]])->first();
+            $user = UserModel::where([['userid', '=', $userid], ['useremail', '=', $useremail] , ['username' ,'=' , $username] ])->first();
 
             if( !$user ){
                 return back()->withErrors('회원정보를 다시 확인해주세요.')->withInput();
@@ -79,13 +80,14 @@ class UserController extends Controller
                 $subject = '임시 비밀번호';
 
                 // 임시 비밀번호 생성
-                $char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $char .= 'abcdefghijklmnopqrstuvwxyz';
-                $char .= '0123456789';
-                $result = '';
-                for($i = 0; $i <= 25; $i++) {
-                    $result .= $char[mt_rand(0, strlen($char))];
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < 15; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
                 }
+                $result =  $randomString;
+
 
                 $message = $result;
                 $headers = 'From: 투어코치 <no-reply@tourcoach.co.kr>' . "\r\n" .
@@ -93,12 +95,12 @@ class UserController extends Controller
                     'X-Mailer: PHP/' . phpversion();
 
                 // 임시 비밀번호 저장
-                $user->userpass = bcrypt($result);
-                $user->save();
+//                $user->userpass = bcrypt($result);
+                UserModel::where('id',$user->id)->update(['userpass' => bcrypt($result)]);
 
                 mail($to, $subject, $message, $headers);
 
-                return redirect('/user/login')->with('success', '해당 이메일로 임시비밀번호를 전송하였습니다.');
+                return redirect('/user/login')->with('success', '해당 이메일로 임시비밀번호를 전송하였습니다.')->withInput();
             }
         }else{
             return view('user.foundPass');
@@ -114,43 +116,37 @@ class UserController extends Controller
         // 회원가입 처리 요청 확인
         if( $req->all() ){
 
-
-            if( $req->session()->get('emailToken') === null || $req->input('emailToken') != $req->session()->get('emailToken')){
-                return back()->withErrors('이메일 인증을 해주시기 바랍니다.')->withInput();
-            }else{
-                $req->session()->forget('emailToken');
-            }
+            // 이메일 인증
+//            if( $req->session()->get('emailToken') === null || $req->input('emailToken') != $req->session()->get('emailToken')){
+//                return back()->withErrors('이메일 인증을 해주시기 바랍니다.')->withInput();
+//            }else{
+//                $req->session()->forget('emailToken');
+//            }
 
 
             // 밸류데이션
             $rules = [
-                'userid' => ['required','min:5'],
+                'userid' => ['required'],
                 'useremail' => ['required','email'],
                 'username' => ['required'],
-                'userpass' => ['required','min:8','confirmed'],
-                'userpass_confirmation' => ['required','min:8'],
-                'userquestion' => ['required'],
-                'useranswer' => ['required'],
+                'userpass' => ['required','confirmed'],
+                'userpass_confirmation' => ['required'],
                 'usergender' => ['required'],
                 'userbirth' => ['required'],
             ];
             // 규칙을 어길시 가는 메시지
             $messages = [
                 'userid.required' => '아이디는 필수 입력사항입니다',
-                'userid.min' => '아이디는 최소 5글자입니다.',
                 'useremail.required' => '이메일 필수 입력사항입니다',
                 'useremail.email' => '이메일 형식을 맞춰주세요',
                 'username.required' => '이름은 반드시 입력되어야 합니다.',
                 'userpass.required' => '비밀번호 입력란은 필수 입력사항입니다',
-                'userquestion.required' => '비밀번호 질문 입력란은 필수 입력사항입니다',
-                'useranswer.required' => ' 비밀번호 질문 답변 입력란은 필수 입력사항입니다',
-                'userpass.min' => '비밀번호은 최소 8글자 입니다',
                 'userpass.confirmed' => '비밀번호가 서로 다릅니다',
                 'userpass_confirmation.required' => '비밀번호 입력란은 필수 입력사항입니다',
-                'userpass_confirmation.min' => '비밀번호은 최소 8글자 입니다',
                 'usergender.required' => '성별은 필수 입력사항입니다',
                 'userbirth.required' => '생일은 필수 입력사항입니다',
                 'userbirth.date_format' => '날짜 형식을 맞춰주세요',
+
             ];
 
             $validator = \Validator::make($req->all(), $rules, $messages);
@@ -167,6 +163,13 @@ class UserController extends Controller
                 return back()->with('err', '해당 아이디의 사용자가 이미 존재합니다.')->withInput();
             }
 
+            $user = UserModel::select('useremail')->where('useremail', '=', $req->input('useremail') )->first();
+            if($user){
+                //해당 사용자가 존재한다면.
+                // back: 이전페이지로 돌아가면서 flash_message에 내용을 저장, withInput을 통해 입력값도 함께 돌려보내줌.
+                return back()->with('err', '해당 이메일의 사용자가 이미 존재합니다.')->withInput();
+            }
+
             // 요청값을 바꾸기위해 다른 변수로 저장한다
             $inputArray = $req->all();
 
@@ -180,7 +183,7 @@ class UserController extends Controller
             $user = UserModel::create($inputArray);
 
             // DB에 넣는것이 실패하면 에러
-            if(! $user){
+            if( !$user ){
 
                 //사용자 가입이 실패한 경우.
                 return back()->with('err', '오류로 가입되지 못했습니다.')->withInput();
@@ -243,8 +246,8 @@ class UserController extends Controller
     }
 
     // 회원정보 수정
-    public function modify(Request $req){
-        return view('user.modify');
+    public function impormation(Request $req){
+        return view('user.impormation');
     }
 
     // 회원정보 수정 처리
@@ -258,5 +261,9 @@ class UserController extends Controller
         }
 
         return back();
+    }
+
+    public function modify(Request $req , $kinds){
+        return view('user.modify');
     }
 }

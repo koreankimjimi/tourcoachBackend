@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Tourdata as TourDataModel;
+use App\Http\Controllers\TourController as TourController;
 
 class TestController extends Controller
 {
@@ -10,31 +12,44 @@ class TestController extends Controller
 
     public function index(Request $req){
 
-        //dump($req);
-        $token = $req->input("hub_verify_token");
+//        //dump($req);
+//        $token = $req->input("hub_verify_token");
+//
+//        $hub = $req->input("hub_challenge");
+//
+////        ob_start();
+////        var_dump($hub);
+////        $result = ob_get_clean();
+////        \File::put(storage_path()."/text.txt", $result);
+//
+//        return response($hub, 200);
+        return view('test.index');
+    }
 
-        $hub = $req->input("hub_challenge");
-
-//        ob_start();
-//        var_dump($hub);
-//        $result = ob_get_clean();
-//        \File::put(storage_path()."/text.txt", $result);
-
-        return response($hub, 200);
-//        return view('test.index');
+    public function send(){
+        $answer = $_GET['id'];
+        $type = $_GET['type'];
+        echo "{\"msg\":\"$answer\",\"type\":\"$type\"}";
     }
 
     public function test(){
 
-        $to      = 'kimppangs@gmail.com';
-        $subject = '테스트';
-        $message = rand();
-        $headers = 'From: 투어코치 <no-reply@tourcoach.co.kr>' . "\r\n" .
-            'Reply-To: no-reply@tourcoach.co.kr' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+//        test$to      = 'kimppangs@gmail.com';
+//        $subject = '테스트';
+//        $message = rand();
+//        $headers = 'From: 투어코치 <no-reply@tourcoach.co.kr>' . "\r\n" .
+//            'Reply-To: no-reply@tourcoach.co.kr' . "\r\n" .
+//            'X-Mailer: PHP/' . phpversion();
+//
+//        mail($to, $subject, $message, $headers);
+        // 여행지명
+        $name = $_GET['location'];
+        $tourData = TourDataModel::where('name' , 'LIKE' , '%'.$name.'%')->first();
+        $weather =  TourController::weatherCheck($tourData->id,$tourData->vilage,$tourData->city);
 
-        mail($to, $subject, $message, $headers);
-
+        $date = $_GET['date'];
+        $msg = $date."에 ".$name."에 날씨는 ".$weather['weather']."도이며 하늘은 ".$weather['sky']."입니다 현재 위치로부터 ".$name."까지 예상 소요시간은 자가용기준 1시간입니다. ";
+        echo "{\"id\":\"223\",\"name\":\"$name\",\"weather\":\"23.3\",\"msg\":\"$msg\"}";
     }
 
     public function t(){

@@ -1,0 +1,112 @@
+
+.container .loginBox .input-table .table-box .form-box .block-box{
+  display: flex;
+}
+.container .loginBox .input-table .table-box .form-box .text-box p{
+  width:100%;
+  text-align: center;
+  font-size: 9pt;
+}
+.container .loginBox .input-table .table-box .form-box .block-box{
+  margin-bottom: 0.5rem;
+
+}
+.container .loginBox .input-table .table-box .form-box .block-box input {
+  /*width:24%;*/
+  /*height: 1rem;*/
+  outline: none;
+  font-size: 10pt;
+  padding: 1rem;
+}
+.container .loginBox .input-table .table-box .form-box .num-box input{
+  width:25%;
+  margin-right: 0.5rem;
+}
+.container .loginBox .input-table .table-box .form-box .email-box input{
+  width: 60%;
+}
+.container .loginBox .input-table .table-box .form-box .email-box .block-btn:active{
+  background-color: lightgray;
+}
+.container .loginBox .input-table .table-box .form-box .block-box .block-btn{
+  border: 1px solid lightgray;
+  height: 100%;
+  width:25%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 10pt;
+  cursor: pointer;
+}
+.container .loginBox .input-table .table-box .form-box .color-box select{
+  padding: 1rem;
+  border: 1px solid lightgray;
+  color:gray;
+  width:45%;
+  font-size: 10pt;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.container .loginBox .input-table .table-box .form-box .color-box input{
+  width:45%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+.container .loginBox .input-table .table-box .form-box .color-box .block-text{
+  /*font-size: 10pt;*/
+  /*color: white;*/
+}
+.container .loginBox .input-table .table-box .form-box .sex-box .block-btn{
+  width:45%;
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-duration: 0.2s;
+
+}
+.container .loginBox .input-table .table-box .form-box .sex-box #men{
+  border-color: #01b8e1;
+  margin-right: 0.0rem;
+  margin-left: 0.0rem;
+}
+.container .loginBox .input-table .table-box .form-box .sex-box #women{
+  border-color: #f24982;
+}
+/*.container .loginBox .input-table .table-box .form-box .sex-box #men:hover{
+  background-color: #01b8e1;
+}
+.container .loginBox .input-table .table-box .form-box .sex-box #women:hover{
+  background-color: #f24982;
+}*/
+
+.container .loginBox .input-table .table-box .form-box .sex-box .ClickMen{
+  background-color: #01b8e1;
+  color:white;
+}
+.container .loginBox .input-table .table-box .form-box .sex-box .ClickWomen{
+  background-color: #f24982;
+  color:white;
+}
+.container .loginBox .bottom-box .register-box{
+  width:50%;
+  height: 100%;
+}
+.container .loginBox .bottom-box .register-box-full{
+  width:100%;
+  height: 100%;
+}
+.container .loginBox .bottom-box .register-box button{
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+.container .loginBox .bottom-box .register-box-full button{
+  width:100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: #2d3b55;
+  color:white;
+  cursor: pointer;
+}

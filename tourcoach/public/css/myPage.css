@@ -1,0 +1,126 @@
+.containor{
+  width:100%;
+  /*height: 100%;*/
+  /*padding: 1rem;*/
+}
+.account{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.account .google-box{
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+.account .kakao-box{
+  background-color: #ffe617;
+}
+.account .fb-box{
+  background-color: #3c5b9b;
+}
+.account .account-box{
+  width:32.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 4rem;
+  padding-bottom: 2.8rem;
+  flex-direction: column;
+  cursor: pointer;
+  /*margin-left: 0.5rem;
+  margin-right: 0.5rem;*/
+}
+.account .account-box img{
+  padding-bottom: 1.2rem;
+}
+.account .google-box .account-title{
+  color:#565656;
+}
+.account .kakao-box .account-title{
+  color:#47292b;
+}
+.account .fb-box .account-title{
+  color:#fff;
+}
+.account .account-box .account-title{
+  font-size: 12pt;
+  font-weight: 600;
+}
+
+.attract{
+  margin-top: 1rem;
+  /*border: 1px solid black;*/
+  /*width: 100%;*/
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.attract .attract-box{
+  /*border: 1px solid black;*/
+  width:49%;
+}
+.attract .attract-box .attract-header{
+  border: 1px solid lightgray;
+  border-bottom: none;
+  padding: 1.3rem;
+}
+.attract .attract-box .attract-header .header-title{
+  font-size: 13pt;
+  font-weight: 600;
+  color:#354052;
+}
+.attract .attract-box .attract-index{
+  border: 1px solid lightgray;
+  padding-left: 1.3rem;
+}
+.attract .attract-box .attract-index li{
+  display: flex;
+  flex-direction: row;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+.attract .attract-box .attract-index li .list-number{
+  flex:1;
+  min-width: 50px;
+  /*border: 1px solid black;*/
+  color:#8494a7;
+}
+.attract .attract-box .attract-index li .list-name{
+  flex:1.5;
+  color:#354052;
+  /*border: 1px solid black;*/
+}
+.attract .attract-box .attract-index li .list-locate{
+  flex:4;
+  /*text-overflow: ellipsis;*/
+  /*white-space: nowrap;*/
+  color:#8494a7;
+  /*border: 1px solid black;*/
+}
+.attract .attract-box .attract-index li .list-star{
+  flex:1;
+  /*border: 1px solid black;*/
+}
+@media (max-width : 780px){
+    .account{
+      flex-direction: column;
+    }
+    .account .account-box{
+      width:100%;
+      margin-bottom: 1.2rem;
+      margin-left: 0rem;
+      margin-right: 0rem;
+    }
+    .attract{
+      flex-direction: column;
+
+    }
+    .attract .attract-box{
+      width:100%;
+      margin-bottom: 1rem;
+    }
+}

@@ -18,11 +18,15 @@ Route::get('/','TourController@index')->name('mainPage');
 // 실시간 여행지 뷰
 Route::get('/tour/live','TourController@liveList')->name('tourLiveListView');
 // 여행지 자세히보기 뷰
-Route::get('/tour/details','TourController@details')->name('tourDetailsView');
+Route::get('/tour/detail/{no}','TourController@detail')->name('tourDetailView');
 // 여행지 추천 뷰
 Route::get('/tour/propose','TourController@propose')->name('tourProposeView');
 // 추천 결과값 요청 ajax
 Route::put('/tour/coach','TourController@coachAjax')->name('tourcoachAjax');
+// 카테고리 뷰
+Route::get("/tour/cateSearch","TourController@cateSearch")->name('tourcateSearch');
+// 후기
+Route::post("/tour/letterWrite","TourController@letterWrite")->name("tourLetterWrite");
 
 
 // @UserController
@@ -38,9 +42,11 @@ Route::post('/user/join','UserController@join')->name('userJoin');
 Route::get('/user/logout','UserController@logout')->name('userLogoutView');
 // 마이페이지 뷰
 Route::get('/user/mypage','UserController@mypage')->name('userMypageView');
+// 회원정보 뷰
+Route::get('/user/impormation','UserController@impormation')->name('userimpormationView');
 // 회원정보 수정 뷰
-Route::get('/user/modify','UserController@modify')->name('userModifyView');
-// 회원정보 처리
+Route::get('/user/modify/{kinds}','UserController@modify')->name('userModifyView');
+// 회원정보 수정  처리
 Route::post('/user/modify/{kinds}','UserController@modifyProcess')->name('userModify');
 // 이메일 인증
 Route::post('/user/emailCheck','UserController@emailCheck')->name('emailCheck');
@@ -53,8 +59,11 @@ Route::get('/user/foundPass','UserController@foundPass')->name('foundPassView');
 // 비밀번호 찾기
 Route::post('/user/foundPass','UserController@foundPass')->name('foundPass');
 
+
+
 // test
 Route::get('/test','TestController@index')->name('Test');
+Route::get('/test/send','TestController@send')->name('send');
 Route::get('/test/test','TestController@test')->name('TestPost');
 Route::get('/t','TestController@t')->name('T');
 

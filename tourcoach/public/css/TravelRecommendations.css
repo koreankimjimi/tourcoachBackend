@@ -3,7 +3,7 @@
 }
 .container .head-title{
   margin-top: 1rem;
-  margin-bottom: 2rem;
+  /*margin-bottom: 2rem;*/
 }
 .container .head-title img{
   width: 200px;
@@ -15,14 +15,27 @@
 }
 .bottom-card{
   border-radius: 10px;
+  display: flex;
+}
+.bottom-card .list-side{
+  display: flex;
+  /*width:60%;*/
+  /*justify-content: space-around;*/
+}
+.bottom-card .list-side .card-list{
+  margin-right: 1.5rem;
 }
 .card{
-
   border-radius: 10px;
-  margin-top: 5rem;
+  margin-top: 2.5rem;
   box-shadow: 2px 2px 20px 1px gray;
   padding: 1.5rem;
-
+}
+.main-card{
+  border-radius: 10px;
+  margin-top: 0rem;
+  box-shadow: 2px 2px 20px 1px gray;
+  padding: 1.5rem;
 }
 .oneCard{
   background-color: #ffb742;
@@ -62,7 +75,8 @@
 
 }
 .card .card-index .card-left{
-
+  /*border: 1px solid black;*/
+  min-width: 250px;
 }
 .card .card-left .card-info{
   /*border: 1px solid black;*/
@@ -90,6 +104,9 @@
   color: #3c3c3c;
 }
 .card .card-right{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
 }
 .card .card-right img{
@@ -105,30 +122,65 @@
   padding: 1.5rem;
   justify-content: space-between;
 }
-.bottom-card .card-list{
+.bottom-card .card-side{
+  display: flex;
+  /*width:50%;*/
+  justify-content: space-around;
+}
+.bottom-card .side-left{
+  width:40%;
+}
+.bottom-card .side-right{
+  width:60%;
+}
+.bottom-card .card-side .card-list{
   /*flex:1;*/
 }
-.bottom-card .card-list .card-title{
+.bottom-card .card-side .card-list .card-title{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
 }
-.bottom-card .card-list .card-title .title{
+.bottom-card .card-side .card-list .card-title .title{
   font-size: 14pt;
   color: #3c3c3c;
 }
-.bottom-card .card-list .card-title .subTitle{
+.bottom-card .card-side .card-list .card-title .subTitle{
   font-size: 12pt;
   margin-left: 0.3rem;
   color:white;
 }
-.normalCard .card-list .card-title .subTitle{
+.normalCard .card-side .card-list .card-title .subTitle{
   color:#c2c2c2;
 }
-.bottom-card .card-list .index{
+.bottom-card .card-side .card-list .index{
   margin-top: 0.7rem;
 }
-.bottom-card .card-list .index img{
+.bottom-card .card-side .card-list .index img{
   width:20px;
   height: auto;
+}
+@media (max-width : 750px){
+  .card .card-index{
+    flex-direction: column;
+  }
+  .card .card-index .card-right{
+    justify-content: flex-start;
+  }
+  .card .card-right img{
+    width:100%;
+  }
+  .bottom-card{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 0.7rem;
+    padding-top: 0.7rem;
+  }
+  .bottom-card .card-side{
+    flex-direction: column;
+  }
+  .bottom-card .card-side .card-list{
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
 }

@@ -4,9 +4,17 @@
 @push('css')
     <style>
         header{ display: none; }
+        @if($errors->any())
+            .input-box{
+                 border-bottom-color:red !important;
+            }
+            .input-title{
+                color:red !important;
+            }
+        @endif
     </style>
     <link rel="stylesheet" href="/css/signIn.css">
-    <link rel="stylesheet" href="/css/style.css">
+
 @endpush
 
 @section('content')
@@ -28,6 +36,7 @@
         {{--<input type="text" name="userpass">--}}
         {{--<button type="submit">로그인</button>--}}
     {{--</form>--}}
+
         <div class="container">
             <div class="signBox loginBox">
                 <div class="input-table">
@@ -35,16 +44,30 @@
                         <div class="table-title">
                             로그인
                         </div>
-                        <div class="form-box">
+                        <form class="form-box" id="login-form-box" method="post">
+                            {{ csrf_field() }}
+                            {{-- 실패시 에러창--}}
+                            @if($errors->any())
+                            <div class="input-box" style="height: 5px;padding: 0;margin: 0;border: none;margin-top: -20px;margin-bottom: 20px;">
+                                <div class="input-title" style="width: 100%;">*{{ $errors->first() }}</div>
+                            </div>
+                            @endif
+                            {{-- 플래쉬 메세지 --}}
+                            @if(session()->has('success'))
+                                <div class="input-box" style="height: 5px;padding: 0;margin: 0;border: none;margin-top: -20px;margin-bottom: 20px;">
+                                    <div class="input-title" style="width: 100%;">*{{ session()->get('success') }}</div>
+                                </div>
+                            @endif
                             <div class="input-box">
                                 <div class="input-title">아이디</div>
-                                <input type="text" name="" value="" id="id-input">
+                                <input type="text" name="userid" id="id-input" required value="{{ old('userid') }}">
                             </div>
                             <div class="input-box">
                                 <div class="input-title">비밀번호</div>
-                                <input type="password" name="" value="" id="pass-input">
+                                <input type="password" name="userpass" id="pass-input" required value="{{ old('userpw') }}">
                             </div>
-                        </div>
+                            <button type="submit" id="login-form-button" style="display: none"></button>
+                        </form>
                     </div>
                     <div class="find-info">
                         <a href="#">아이디 찾기</a>
@@ -56,10 +79,10 @@
                 </div>
                 <div class="bottom-box">
                     <div class="register-box button-box">
-                        <button type="button" name="button">회원가입</button>
+                        <button type="button" name="button" onclick="location.href='/user/join'">회원가입</button>
                     </div>
                     <div class="login-box button-box">
-                        <button type="button" name="button">로그인</button>
+                        <button type="button" name="button" onclick="document.getElementById('login-form-button').click();">로그인</button>
                     </div>
                 </div>
             </div>
