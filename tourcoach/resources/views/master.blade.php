@@ -47,16 +47,30 @@
         <!-- 기둥뒤에 공간있어요 -->
     </div>
     <nav>
-        <div class="nav-box">
-            <a href="/tour/cateSearch">분야별 여행지</a>
-        </div>
+        {{--<div class="nav-box">--}}
+            {{--<a href="/tour/cateSearch">분야별 여행지</a>--}}
+        {{--</div>--}}
+        @if( !session()->has('loginData'))
         <div class="nav-box">
             <a href="/user/join">회원가입</a>
         </div>
         <div class="nav-box">
             <a href="/user/login">로그인</a>
-
         </div>
+        @endif
+        @if( session()->has('loginData'))
+            @if(Request::is('user/mypage') )
+                <div class="nav-box">
+                    <a href="/user/impormation">회원정보</a>
+                </div>
+            @endif
+            <div class="nav-box">
+                <a href="/user/mypage">마이페이지</a>
+            </div>
+            <div class="nav-box">
+                <a href="/user/logout">로그아웃</a>
+            </div>
+        @endif
     </nav>
 </header>
 
@@ -64,6 +78,7 @@
     @yield('content')
     <script src="/js/jquery-1.11.1.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/Kjm.js"></script>
     @stack('js')
 </body>
 </html>

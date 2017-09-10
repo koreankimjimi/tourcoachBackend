@@ -70,11 +70,11 @@
                         </form>
                     </div>
                     <div class="find-info">
-                        <a href="#">아이디 찾기</a>
+                        <a href="/user/foundId">아이디 찾기</a>
                         <div class="line">
                             |
                         </div>
-                        <a href="#">비밀번호 찾기</a>
+                        <a href="/user/foundPass">비밀번호 찾기</a>
                     </div>
                 </div>
                 <div class="bottom-box">

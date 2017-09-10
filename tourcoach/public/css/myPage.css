@@ -12,13 +12,24 @@
 }
 .account .google-box{
   background-color: #f5f5f5;
-  cursor: pointer;
+  border: 1px solid #f5f5f5;;
+}
+.account .google-disabled{
+  border: 1px solid #f5f5f5;
 }
 .account .kakao-box{
   background-color: #ffe617;
+  border: 1px solid #ffe617;
+}
+.account .kakao-disabled{
+  border: 1px solid #ffe617;
 }
 .account .fb-box{
   background-color: #3c5b9b;
+  border: 1px solid #3c5b9b;
+}
+.account .fb-disabled{
+  border: 1px solid #3c5b9b;
 }
 .account .account-box{
   width:32.5%;
@@ -35,18 +46,40 @@
 .account .account-box img{
   padding-bottom: 1.2rem;
 }
+.account .disabled{
+  background-color: #fff;
+}
 .account .google-box .account-title{
   color:#565656;
 }
 .account .kakao-box .account-title{
   color:#47292b;
 }
+.account .kakao-box .account-reset{
+  color:#47292b;
+}
 .account .fb-box .account-title{
   color:#fff;
+}
+.account .fb-box .account-reset{
+  color:#fff;
+}
+.account .fb-box .account-reset a{
+  color:#fff;
+}
+.account .fb-box .account-reset a:active{
+  color:red;
 }
 .account .account-box .account-title{
   font-size: 12pt;
   font-weight: 600;
+}
+.account .account-box .account-title span{
+  color:#4bb646;
+}
+.account .account-box .account-reset{
+  margin-top: 0.4rem;
+  font-size: 8pt;
 }
 
 .attract{
@@ -62,6 +95,7 @@
 .attract .attract-box{
   /*border: 1px solid black;*/
   width:49%;
+
 }
 .attract .attract-box .attract-header{
   border: 1px solid lightgray;
@@ -80,30 +114,45 @@
 .attract .attract-box .attract-index li{
   display: flex;
   flex-direction: row;
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
+
+  height: 40px;
+  align-items: center;
 }
-.attract .attract-box .attract-index li .list-number{
+.attract .attract-box .attract-index li  .list-number{
   flex:1;
   min-width: 50px;
   /*border: 1px solid black;*/
   color:#8494a7;
+  font-size: 10pt;
 }
 .attract .attract-box .attract-index li .list-name{
   flex:1.5;
   color:#354052;
   /*border: 1px solid black;*/
+  font-size: 10pt;
 }
-.attract .attract-box .attract-index li .list-locate{
+.attract .attract-box .attract-index li  .list-locate{
   flex:4;
   /*text-overflow: ellipsis;*/
   /*white-space: nowrap;*/
   color:#8494a7;
   /*border: 1px solid black;*/
+  font-size: 10pt;
 }
-.attract .attract-box .attract-index li .list-star{
+.attract .attract-box .attract-index li .list-review{
   flex:1;
   /*border: 1px solid black;*/
+  display: flex;
+  align-items: center;
+  min-width: 60px;
+}
+.attract .attract-box .attract-index li .list-review img{
+  width:auto;
+  height: 18px;
+}
+.attract .attract-box .attract-index li .list-review .review-cnt{
+  padding-left: 0.4rem;
+  font-size: 10pt;
 }
 @media (max-width : 780px){
     .account{
@@ -123,4 +172,13 @@
       width:100%;
       margin-bottom: 1rem;
     }
+
+}
+@media (max-width:500px) {
+  .attract .attract-box .attract-index li .list-thumb{
+    display: none;
+  }
+  .attract .attract-box .attract-index li .list-number{
+    display: none;
+  }
 }

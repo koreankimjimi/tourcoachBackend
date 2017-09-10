@@ -6,3 +6,25 @@
     /*padding-bottom: 0 !important;*/
     /*padding-top: 50px !important;*/
 /*}*/
+nav > .nav-box > a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.loginBox .find-info{
+    text-align: center;
+
+}
+.loginBox .find-info > div{
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.loginBox .find-info a{
+    color: #333;
+    font-size: 12px;
+    text-decoration: none;
+}
+.registerBox{
+    margin-top: 100px;
+}

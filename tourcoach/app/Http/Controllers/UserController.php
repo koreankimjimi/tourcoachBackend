@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User as UserModel;
+use App\ProductViewCount as ViewCountMoel;
 
 class UserController extends Controller
 {
@@ -160,14 +161,14 @@ class UserController extends Controller
             if($user){
                 //해당 사용자가 존재한다면.
                 // back: 이전페이지로 돌아가면서 flash_message에 내용을 저장, withInput을 통해 입력값도 함께 돌려보내줌.
-                return back()->with('err', '해당 아이디의 사용자가 이미 존재합니다.')->withInput();
+                return back()->withErrors('해당 아이디의 사용자가 이미 존재합니다.')->withInput();
             }
 
             $user = UserModel::select('useremail')->where('useremail', '=', $req->input('useremail') )->first();
             if($user){
                 //해당 사용자가 존재한다면.
                 // back: 이전페이지로 돌아가면서 flash_message에 내용을 저장, withInput을 통해 입력값도 함께 돌려보내줌.
-                return back()->with('err', '해당 이메일의 사용자가 이미 존재합니다.')->withInput();
+                return back()->withErrors('해당 이메일의 사용자가 이미 존재합니다.')->withInput();
             }
 
             // 요청값을 바꾸기위해 다른 변수로 저장한다
@@ -235,8 +236,41 @@ class UserController extends Controller
     }
 
     // 마이페이지
-    public function mypage(){
-        return view('user.mypage');
+    public function mypage(Request $req){
+        if( !isset($req->session()->get('loginData')->id) ){
+            return redirect("/");
+        }
+        // 사용자 코치 데이터 변수
+        $coachDatas = null;
+        // 사용자 추천 데이터 변수
+        $proposeDatas = null;
+
+        // 사용자 코치 데이터 쿼리
+        $sql = "SELECT * , B.id as realId , 
+                IFNULL((SELECT COUNT(*) FROM product_likes WHERE tourId = B.id GROUP by tourId ) , 0) as likeCnt ,
+                IFNULL((SELECT COUNT(*) FROM reviews WHERE tourId = B.id GROUP by tourId ) , 0) as reviewCnt
+                FROM 
+                product_view_counts as A LEFT JOIN tourdatas as B 
+                ON A.productId = B.id 
+                WHERE A.userId = ".$req->session()->get('loginData')->id."
+                LIMIT 0,10";
+        // 사용자 코치 데이터
+        $coachDatas = DB::select( DB::raw($sql) );
+
+        // 사용자 추천 데이터
+        $sql2 = "SELECT * , B.id as realId,
+                 IFNULL((SELECT COUNT(*) FROM product_likes WHERE tourId = B.id GROUP by tourId ) , 0) as likeCnt ,
+                 IFNULL((SELECT COUNT(*) FROM reviews WHERE tourId = B.id GROUP by tourId ) , 0) as reviewCnt
+                 FROM 
+                 product_propose_counts as A 
+                 LEFT JOIN 
+                 tourdatas as B 
+                 ON A.tourId = B.id 
+                 WHERE A.userId =  ".$req->session()->get('loginData')->id."
+                 LIMIT 0,10";
+
+        $proposeDatas = DB::select( DB::raw($sql2) );
+        return view('user.mypage',['coachDatas' => $coachDatas , 'proposeDatas' => $proposeDatas]);
     }
 
     // 로그아웃
@@ -247,6 +281,9 @@ class UserController extends Controller
 
     // 회원정보 수정
     public function impormation(Request $req){
+        if( !isset($req->session()->get('loginData')->id) ){
+            return redirect("/");
+        }
         return view('user.impormation');
     }
 

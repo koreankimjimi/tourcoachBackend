@@ -15,7 +15,7 @@
         <section id="Profile" class="profile">
             <div class="profile-title-box">
                 <div class="profile-title-main">
-                    <img src="/img/RESOURCE/ModifyMemberInformation/ic_회원정보수정.png" alt="" draggable="false">
+                    <img src="/img/RESOURCE/ModifyMemberInformation/ic_mody.png" alt="" draggable="false">
                 </div>
                 <div class="profile-title-sub">
                     가입하신 회원정보를 수정하실 수 있습니다.[ tourcoach ]님의 정보입니다.</br>
@@ -36,7 +36,7 @@
                             실명 정보(이름, 생년월일, 성별, 고유 식별정보)가 번경된 경우 본인 확인을 통해 정보를 수정하실 수 있습니다.
                         </div>
                         <div class="profile-index">
-                            홍길동
+                            {{ session()->get('loginData')->username }}
                         </div>
                     </div>
                     {{--<div class="profile-right">--}}
@@ -59,7 +59,7 @@
                             사용자의 아이디 입니다.
                         </div>
                         <div class="profile-index">
-                            tourcoach
+                            {{ session()->get('loginData')->userid }}
                         </div>
                     </div>
                     {{--<div class="profile-right">--}}
@@ -128,11 +128,11 @@
                             아이디 비밀번호 찾기 등 본인확인이 필요한 경우에 사용하는 이메일입니다.
                         </div>
                         <div class="profile-index">
-                            eunsol2953@naver.com
+                            {{ session()->get('loginData')->useremail }}
                         </div>
                     </div>
                     <div class="profile-right">
-                        <div class="fix-btn" >
+                        <div class="fix-btn" onclick="location.href = '/user/modify/email'">
                             수정하기
                         </div>
                     </div>

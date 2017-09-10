@@ -26,8 +26,13 @@ Route::put('/tour/coach','TourController@coachAjax')->name('tourcoachAjax');
 // 카테고리 뷰
 Route::get("/tour/cateSearch","TourController@cateSearch")->name('tourcateSearch');
 // 후기
-Route::post("/tour/letterWrite","TourController@letterWrite")->name("tourLetterWrite");
-
+Route::post("/tour/letterWrite/{tourId}","TourController@letterWrite")->name("tourLetterWrite");
+// 좋아요
+Route::post("/tour/productLike","TourController@productLike")->name("tourProductLike");
+// 여행지 정보 카카오톡으로 보내기
+Route::post("/tour/sendKakao/{no}","TourController@sendKakao")->name("tourSendKakao");
+// 리뷰 가져오기
+Route::post("/tour/getReview","TourController@getReview")->name("tourGetReview");
 
 // @UserController
 // 로그인 뷰
@@ -63,6 +68,8 @@ Route::post('/user/foundPass','UserController@foundPass')->name('foundPass');
 
 // test
 Route::get('/test','TestController@index')->name('Test');
+//test2
+Route::get('/test/test2','TestController@test2')->name('Test2');
 Route::get('/test/send','TestController@send')->name('send');
 Route::get('/test/test','TestController@test')->name('TestPost');
 Route::get('/t','TestController@t')->name('T');

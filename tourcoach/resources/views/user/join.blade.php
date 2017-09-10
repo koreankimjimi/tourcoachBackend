@@ -57,6 +57,8 @@
                     </div>
 
                     <form class="form-box" method="post">
+                        <input type="radio" name="usergender" value="men" id="menI" style="display: none">
+                        <input type="radio" name="usergender" value="women" id="womenI" style="display: none">
                         {{ csrf_field() }}
                         @if($errors->any())
                             <div class="input-box" style="height: 5px;padding: 0;margin: 0;border: none;margin-top: -20px;margin-bottom: 20px;padding-top:20px; ">
@@ -111,18 +113,19 @@
                             {{--<input type="text" name="" value="" id="month" placeholder="월">--}}
                             {{--<input type="text" name="" value="" id="day" placeholder="일">--}}
                         {{--</div>--}}
+
                         <div class="sex-box block-box">
-                            <div type="checkbox" name="button" id="men" class="block-btn unClickMen">남자</div>
-                            <div type="checkbox" name="button" id="women" class="block-btn unClickWomen">여자</div>
+                            <label for="menI" class="block-btn unClickMen" id="men">남자</label>
+                            <label for="womenI" class="block-btn unClickWomen" id="women">여자</label>
                         </div>
 
-                        {{--<input type="checkbox" name="sex" value="men">--}}
-                        {{--<input type="checkbox" name="sex" value="girl">--}}
+
 
                         <div class="text-box">
                             <p>가입 계약을 채결하시면 서비스 약관 및 개인 정보 보호 정책에 동의합니다.</p>
                         </div>
                         <button type="submit" id="join-form-button" style="display: none;"></button>
+
                     </form>
                 </div>
             </div>
