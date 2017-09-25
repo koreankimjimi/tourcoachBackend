@@ -117,10 +117,20 @@
             alert(JSON.stringify(err));
         }
     });
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+        var latitude = pos.coords.latitude;
+        var longitude = pos.coords.longitude;
+        alert("현재 위치는 : " + latitude + ", "+ longitude);
+    });
+
+
+
     //]]>
 </script>
 <img src="https://maps.googleapis.com/maps/api/staticmap?size=512x512&maptype=roadmap\
 &markers=size:mid%7Ccolor:red%7C제주특별자치도 서귀포시 중문로105번길 37&zoom=12&key=AIzaSyDqWBda5DAqcIJQIWAs6_kYjTPCLUd1Ejw" alt="">
 <img src="https://maps.googleapis.com/maps/api/staticmap?center=제주특별자치도 서귀포시 중문로105번길 37 (중문동)&zoom=14&size=400x400&key=AIzaSyDqWBda5DAqcIJQIWAs6_kYjTPCLUd1Ejw" alt="">
+<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=AIzaSyD8V8I_nchb7DszRBZaQb0mOqCv89quXgE">
 </body>
 </html>

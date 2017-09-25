@@ -11,6 +11,7 @@ use App\Review as ReviewModel;
 use App\ProductLike as ProductLikeModel;
 use Illuminate\Support\Facades\DB;
 use App\KakaoToken as KakaoaModel;
+use App\ProductViewCount as ViewCountModel;
 
 class TourController extends Controller
 {
@@ -90,7 +91,21 @@ class TourController extends Controller
             // 맞춤여행지 데이터 변수
             $userTourDatas = null;
             // 맞춤 여행지 쿼리
-            $sql = "SELECT DISTINCT(B.id) ,A.name , B.name as realName, B.address , B.big_cate , B.middle_cate ".
+            $sql = "SELECT DISTINCT(B.id) ,A.name , B.name as realName, B.address , B.big_cate , B.middle_cate ,".
+                "(SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = B.id ) as likeCnt , ".
+                "(SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = B.id ) as reviewCnt ,".
+                " CASE B.middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate ".
                 "FROM BestTour2016 AS A ".
                 "RIGHT JOIN (SELECT * ".
                 "FROM tourdatas as A ".
@@ -101,7 +116,7 @@ class TourController extends Controller
                 "ON A.location = B.address ".
                 "WHERE B.small_cate = '".$tourData->small_cate."' ".
                 "ORDER BY A.name DESC ".
-                "LIMIT 0,5";
+                "LIMIT 0,6";
 
 
             if( isset($req->session()->get('loginData')->id) ) {
@@ -120,6 +135,11 @@ class TourController extends Controller
             $reviewCount = ReviewModel::where('tourId' , '=' , $no)->orderBy('date' , 'desc')->count();
             // 맞춤여행지 데이터
             $userTourDatas = DB::select( DB::raw($sql) );
+
+            if(strpos($tourData->address,",") !== false){
+                $tourData->address = explode(",",$tourData->address)[0];
+            }
+
             // 실시간 날씨
             $weather = $this->weatherCheck($tourData->id,$tourData->vilage,$tourData->city);
 //            dd($userTourDatas);
@@ -149,7 +169,7 @@ class TourController extends Controller
             "ON A.location = B.address ".
             "WHERE B.area LIKE \"%$location%\" or B.city LIKE \"%$location%\" or B.village LIKE \"%$location%\" ".
             "ORDER BY A.name DESC ".
-            "LIMIT 0,3";
+            "LIMIT 0,4";
         $tourData = DB::select( DB::raw($sql) );
 
 
@@ -185,12 +205,179 @@ class TourController extends Controller
 
     }
 
+    // 카테고리 이미지 영어변환
+    static function backgroundImg($name){
+        $url = "/img/RESOURCE/FieldTourist/";
 
+        switch($name){
+            case "건축/조형물":
+                $url.= "bg_construct.png";
+                break;
+            case "문화시설":
+                $url .= "bg_culture.png";
+                break;
+            case "산업관광지":
+                $url .= "bg_industry.png";
+                break;
+            case "역사관광지":
+                $url .= "bg_history.png";
+                break;
+            case "체험관광지":
+                $url .= "bg_experience.png";
+                break;
+            case "휴양관광지":
+                $url .= "bg_recreation.png";
+                break;
+            case "관광자원":
+                $url .= "bg_tourism.png";
+                break;
+            case "섬":
+                $url .= "bg_island.png";
+                break;
+            case "자연관광지":
+                $url .= "bg_nature";
+                break;
+
+        }
+
+        return $url;
+    }
     // 카테고리 , 검색 뷰
     public function cateSearch(Request $req){
+        // 여행지 데이터 배열
+        $tourDatas = array();
 
 
-        return view("tour.cateSearch");
+        // 인기 여행지 쿼리
+        $topTourQuery = "SELECT * , A.id as realId,
+                         CASE A.middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate, 
+                         (SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = realId ) as likeCnt ,
+                         (SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = realId ) as reviewCnt 
+                         FROM
+                         tourdatas as A 
+                         LEFT JOIN
+                         (SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B
+                         on A.id = B.tourId
+                         ORDER BY B.cnt DESC
+                         LIMIT 0,6";
+        // 건축/조형물 데이터 쿼리
+        $buildTourQuery = "SELECT * , A.id as realId,
+                         CASE A.middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate,
+                         (SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = realId ) as likeCnt ,
+                         (SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = realId ) as reviewCnt
+                         FROM
+                         tourdatas as A 
+                         LEFT JOIN
+                         (SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B
+                         on A.id = B.tourId
+                         WHERE A.middle_cate = '건축/조형물'
+                         ORDER BY B.cnt DESC
+                         LIMIT 0,6";
+        // 문화 데이터 쿼리
+        $cultureTourQuery = "SELECT * , A.id as realId,
+                          CASE A.middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate,
+                         (SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = realId ) as likeCnt ,
+                         (SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = realId ) as reviewCnt
+                         FROM
+                         tourdatas as A 
+                         LEFT JOIN
+                         (SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B
+                         on A.id = B.tourId
+                         WHERE A.middle_cate = '문화시설'
+                         ORDER BY B.cnt DESC
+                         LIMIT 0,6";
+        // 자연 데이터 쿼리
+        $naturalTourQuery = "SELECT * , A.id as realId,
+                          CASE A.middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate,
+                         (SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = realId ) as likeCnt ,
+                         (SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = realId ) as reviewCnt
+                         FROM
+                         tourdatas as A 
+                         LEFT JOIN
+                         (SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B
+                         on A.id = B.tourId
+                         WHERE A.middle_cate = '자연관광지'
+                         ORDER BY B.cnt DESC
+                         LIMIT 0,6";
+        // 실시간 여행지 데이터 쿼리
+        $liveTourQuery = "SELECT * , A.id as realId,
+                          CASE A.middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate,
+                         (SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = realId ) as likeCnt ,
+                         (SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = realId ) as reviewCnt
+                         FROM
+                         tourdatas as A 
+                         LEFT JOIN
+                         product_view_counts as B
+                         on A.id = B.productId
+                         ORDER BY B.date DESC
+                         LIMIT 0,6";
+        // 인기 여행지 데이터
+        $tourDatas['topTour'] = DB::select( DB::raw($topTourQuery) );
+        // 실시간 여행지지 데이터
+        $tourDatas['liveTour'] = DB::select( DB::raw($liveTourQuery) );
+        // 건축/조형물 데이터
+        $tourDatas['buildTour'] = DB::select( DB::raw($buildTourQuery) );
+        // 문화 여행지 데이터
+        $tourDatas['cultureTour'] = DB::select( DB::raw($cultureTourQuery) );
+        // 자연 여행지 데이터
+        $tourDatas['naturalTour'] = DB::select( DB::raw($naturalTourQuery) );
+
+        return view("tour.cateSearch",['tourDatas' => $tourDatas]);
     }
 
 
@@ -339,5 +526,35 @@ class TourController extends Controller
        return response()->json($reviewDatas);
 
    }
+
+    // 검색 결과
+    public function searchResult(Request $req){
+        $search = $req->input('search');
+
+        // 쿼리
+        $Query = "SELECT *,
+                          CASE middle_cate
+                          WHEN '건축/조형물' THEN 'construct'
+                          WHEN '문화시설' THEN 'culture'
+                          WHEN '산업관광지' THEN 'industry'
+                          WHEN '역사관광지' THEN 'history'
+                          WHEN '체험관광지' THEN 'experience'
+                          WHEN '관광자원' THEN 'tourism' 
+                          WHEN '휴향관광지' THEN 'recreation' 
+                          WHEN '섬' THEN 'island'
+                          WHEN '자연관광지' THEN 'nature'
+                          else 'construct'
+                          end as middle_cate,
+                         (SELECT COUNT(*) as cnt FROM `product_likes` WHERE tourId = tourdatas.id ) as likeCnt ,
+                         (SELECT COUNT(*) as cnt FROM `reviews` WHERE tourId = tourdatas.id ) as reviewCnt 
+                         FROM
+                         tourdatas
+                         WHERE name like '%".$search."%'
+                         LIMIT 0,10";
+
+        $tourDatas = DB::select( DB::raw($Query) );
+        
+        return view("tour/searchResult",['tourDatas' => $tourDatas]);
+    }
 
 }

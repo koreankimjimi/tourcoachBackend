@@ -1,20 +1,10 @@
 @extends('master')
 
 @push('js')
+    {{--<script src="js/main.js" charset="utf-8"></script>--}}
 
-    <script>
-        window.onload = function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-
-        }
-
-    </script>
     <script src="/js/detail.js"></script>
+    <script src="/js/planet.js"></script>
 @endpush
 
 @push('css')
@@ -24,9 +14,7 @@
 <link rel="stylesheet" href="/css/FieldTourist.css">
 
 <style>
-    body{
-        overflow-x: hidden;
-    }
+
     .review-list{
         margin-bottom: 30px;
     }
@@ -52,25 +40,7 @@
         font-size: 12pt;
         padding-bottom: 0.4rem;
     }
-    #likeBtn{
-        width: 80px;
-        height:80px;
-        background: #fff;
-        color: #333;
-        border-radius: 50%;
-        box-shadow: 1px 1px 10px #555;
-        position: fixed;
-        bottom: 20px;
-        right:20px;
-        cursor: pointer;
-        padding: 30px 25px;
-        box-sizing: border-box;
-        font-weight: bold;
-        background-image: url('/img/RESOURCE/TravelInformation/like.png');
-        background-repeat: no-repeat;
-        background-position: 50%;
-        background-size: 50% 50%;
-    }
+
 
     /*#ReviewPopup{*/
         /*width:100%;*/
@@ -96,11 +66,11 @@
 @endpush
 
 @section('content')
-    @if(session()->has('loginData'))
-        @if($like)
-        <nav id="likeBtn" data="{{ $tourData->id }}"></nav>
-        @endif
-    @endif
+    {{--@if(session()->has('loginData'))--}}
+        {{--@if($like)--}}
+        {{--<nav id="likeBtn" data="{{ $tourData->id }}"></nav>--}}
+        {{--@endif--}}
+    {{--@endif--}}
     <div class="container">
         <div class="info-box travel-box">
             <div class="title-box">
@@ -161,6 +131,19 @@
                                 {{ $tourData->small_cate }}
                             </div>
                         </div>
+                        <div class="card-time card-info tmap">
+                            <div class="info-title">
+                                <div class="title">
+                                    티맵
+                                </div>
+                                <div class="subTitle">
+                                    Tmap
+                                </div>
+                            </div>
+                            <div class="info-index">
+                                <a style="cursor: pointer" onClick="PLANET.send('{{ $tourData->address }}');">Tmap 실행</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-right">
                         {{--<img src="/img/RESOURCE/TravelRecommendations/bg_tower.png" alt="" draggable="false">--}}
@@ -178,9 +161,19 @@
             </section>
             <section class="bottom-card normalCard">
                 <div class="card-side side-left">
-                    <div class="star card-list">
+                    <div class="star card-list"
+                         @if( !$like)
+                         style="color: cornflowerblue"
+                            @endif
+                    >
                         <div class="card-title">
-                            <div class="title">
+                                     <div class="title"
+                                          @if( $like)
+                                          id="likeBtn"
+                                          @endif
+                                          style="cursor: pointer"
+                                          data="{{ $tourData->id }}">
+
                                 좋아요
                             </div>
                             <div class="subTitle">
@@ -188,6 +181,7 @@
                             </div>
                         </div>
                         <div class="index">
+                            <img src="/img/RESOURCE/TravelInformation/ic_cardview_thumb_up_blue.png" alt="like" width="18px" height="18px">
                             {{ $likeCount }}개
                         </div>
                     </div>
@@ -283,6 +277,7 @@
                     </div>
                 </div>
                 @endforeach
+                    <button data="{{ $tourData->id }}" class="reviewMoreBtn" style="font-size: 14pt;padding-bottom:15px;background-color: #fff;margin-right:10px;float:left;width: 100%;height: 40px;border: none;outline: none;cursor: pointer;  color: #333;cursor: pointer;">더보기</button>
                 @if(session()->has('loginData'))
                 <div class="review-list input-box">
                     <div class="input-title">리뷰 작성</div>
@@ -294,11 +289,12 @@
                     </form>
 
                 </div>
-                <button onclick="document.getElementById('reviewSubmit').click();" style="float:right;width: 80px;height: 40px;border: none;outline: none;cursor: pointer;    background-color: #2d3b55;color: white;cursor: pointer;">작성</button>
+                <button onclick="document.getElementById('reviewSubmit').click();" style="float: right;width: 80px;height: 40px;border: none;outline: none;cursor: pointer;    background-color: #2d3b55;color: white;cursor: pointer;">작성</button>
                 @endif
-                <button data="{{ $tourData->id }}" class="reviewMoreBtn" style="margin-right:10px;float:right;width: 80px;height: 40px;border: none;outline: none;cursor: pointer;    background-color: #2d3b55;color: white;cursor: pointer;">더보기</button>
+
             </section>
-            <section id="reviewPop" class="review-section" style="overflow-y:scroll;padding-bottom: 60px;background-color:#fff;position: fixed;width: 80%;height: 90%;top: 50%;left: 50%;transform: translate(-50%,-50%);display: none">
+            {{--리뷰 팝업--}}
+            <section id="reviewPop" class="review-section" style="z-index:10000;overflow-y:scroll;padding-bottom: 60px;background-color:#fff;position: fixed;width: 80%;height: 90%;top: 50%;left: 50%;transform: translate(-50%,-50%);display: none">
 
                     {{--<div class="review-list">--}}
                         {{--<div class="review-title">--}}
@@ -333,25 +329,45 @@
             </div>
         </div>
         <div class="btn_box">
-            <div class="rightBtn">
+            <div class="rightBtn rightBtn1">
                 <img src="/img/RESOURCE/FieldTourist/ic_right_arrow.png" class="rightBtn_Img" draggable="false">
             </div>
-            <div class="leftBtn">
+            <div class="leftBtn leftBtn1">
                 <img src="/img/RESOURCE/FieldTourist/ic_left_arrow.png" class="leftBtn_Img" draggable="false">
             </div>
             <div class="project">
 
-                @foreach($userTourDatas as $data)
-                <div class="project-box pb ts">
-                    <div class="project-card han">
+                @foreach($userTourDatas as $key => $data)
+                @if($key == 0)
+                <div class="project-box pb a">
+                @endif
+                @if($key != 0)
+                 <div class="project-box pb pb">
+                 @endif
+                    <div class="project-card {{ $data->middle_cate }}">
                         <div class="null-box"></div>
                         <div class="project_bottom_explain">
                             <div class="project-title">
                                 <div class="project-name">
-                                    <a style="color: #fff;text-decoration: none" href="/tour/detail/{{ $data->id }}">{{ $data->realName }}</a>
+                                    <a style="color: #fff;text-decoration: none" href="/tour/detail/{{ $data->id }}">
+                                        {{ mb_substr($data->realName,0,7) }}
+                                        @if( mb_strlen($data->realName) > 7)
+                                            ...
+                                        @endif
+                                    </a>
                                 </div>
                                 <div class="project-subName">
                                     {{ $data->address or '주소없음' }}
+                                </div>
+                            </div>
+                            <div class="project-subtitle">
+                                <div class="item">
+                                    <img src="/img/RESOURCE/TravelInformation/ic_cardview_thumb_up_blue.png" alt="like" width="18px" height="18px">
+                                    {{ $data->likeCnt }}
+                                </div>
+                                <div class="item">
+                                    <img src="/img/RESOURCE/TravelInformation/ic_cardview_star_yellow.png" alt="like" width="18px" height="18px">
+                                    {{ $data->reviewCnt }}
                                 </div>
                             </div>
                         </div>
@@ -442,18 +458,17 @@
         </div>
     </div>
     <footer>
-        <div class="footer-icon">
-            <img src="/img/RESOURCE/Main/ic_airplane.png" alt="" draggable="false">
-        </div>
-        <div class="footer-logo">
-            <img src="/img/RESOURCE/Main/ic_tour_coach.png" alt="" draggable="false">
-        </div>
-        <div class="null-box">
-            <!-- 기둥뒤에 공간있어요 -->
-        </div>
-        <div class="sk-logo">
-            <img src="" alt="">
-        </div>
+          <div class="footer-logo">
+            <img src="/img/RESOURCE/CategoryResult/ic_tour_coach.png" alt="">
+          </div>
+          <div class="footer-index">
+            ©2017 CIRCLE TOURCOACH ALL RIGHT RESERVED. </br>
+            26. JONG-RO, JONGNO-GU, SEOUL</br>
+            SKT Smarteen App Challenge 2017
+          </div>
+          <div class="footer-icon">
+            <img src="/img/RESOURCE/CategoryResult/ic_skt.png" alt="">
+          </div>
     </footer>
 
 

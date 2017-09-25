@@ -1,34 +1,55 @@
 footer{
-  background-image: url('../img/RESOURCE/Main/bg_meun_bar.png');
+  background-image: url("../img/RESOURCE/Main/bg_meun_bar.png");
   height: 80px;
   margin-top: 2rem;
   background-size: cover;
   display: flex;
   align-items: center;
 }
-footer .footer-icon{
-  height: 100%;
-  display: flex;
-  align-items: center;
-  margin-left: 2rem;
-  margin-right: 0.5rem;
-}
-footer .footer-icon img{
-  width: 30px;
-  height: auto;
-  cursor: pointer;
-}
 footer .footer-logo{
-  height: 100%;
-  display: flex;
-  align-items: center;
-  margin-left: 0.3rem;
+  margin-left: 2rem;
+  /*border: 1px solid black;*/
+  /*height: 100%;*/
 }
 footer .footer-logo img{
-  height: 17px;
-  width:auto;
-  cursor: pointer;
+  height: 35px;
+  width: auto;
 }
-footer .null-box{
+footer .footer-index{
+  color:white;
+  font-size: 10pt;
+  margin-left: 3rem;
+  letter-spacing: 3px;
+
+}
+
+footer .footer-icon{
+  display: flex;
+  /*width:100%;*/
   flex:1;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
+footer .footer-icon img{
+  height: 45px;
+  width:auto;
+}
+@media (max-width : 650px){
+  footer .footer-icon{
+    display: none;
+  }
+  footer .footer-index{
+    font-size: 5pt;
+
+  }
+
+}
+@media (max-width : 530px){
+  footer .footer-logo{
+    display: none;
+  }
+  footer .footer-index{
+    font-size: 5pt;
+  }
+
 }

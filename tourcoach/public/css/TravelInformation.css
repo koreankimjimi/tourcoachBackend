@@ -103,6 +103,9 @@ body{
   font-size: 12pt;
   padding-bottom: 1.8rem;
 }
+.tmap{
+  display: none;
+}
 @media (max-width : 650px){
   .container .info-box .social{
     /*border: 1px solid black;*/
@@ -112,5 +115,8 @@ body{
   .container .info-box .social .social-box{
     width:100%;
     margin-bottom: 1rem;
+  }
+  .tmap{
+    display: block;
   }
 }

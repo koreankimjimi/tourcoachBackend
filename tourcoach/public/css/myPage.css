@@ -24,6 +24,9 @@
 .account .kakao-disabled{
   border: 1px solid #ffe617;
 }
+.account .nugu-disabled{
+  border: 1px solid #57bbcd;
+}
 .account .fb-box{
   background-color: #3c5b9b;
   border: 1px solid #3c5b9b;
@@ -31,8 +34,11 @@
 .account .fb-disabled{
   border: 1px solid #3c5b9b;
 }
+.account .nugu-box{
+  border: 1px solid #57bbcd;
+}
 .account .account-box{
-  width:32.5%;
+  width:24.5%;
   display: flex;
   justify-content: center;
   align-items: center;

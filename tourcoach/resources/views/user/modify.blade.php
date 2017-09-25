@@ -14,7 +14,7 @@
         @endif
     </style>
     <link rel="stylesheet" href="/css/signIn.css">
-
+    <link rel="stylesheet" href="/css/register.css">
 @endpush
 
 @section('content')
@@ -39,7 +39,7 @@
 
     <div class="container">
         <div class="signBox loginBox">
-            <div class="input-table">
+            <div class="input-table" style="padding-bottom: 7rem;">
                 <div class="table-box">
                     <div class="table-title">
                         비밀번호 수정

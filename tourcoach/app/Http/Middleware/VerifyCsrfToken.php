@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
 //        'tour/coach',
-          'tour/getReview'
+          'tour/getReview',
+          'user/kakaoToken'
     ];
 }

@@ -115,8 +115,8 @@
                         {{--</div>--}}
 
                         <div class="sex-box block-box">
-                            <label for="menI" class="block-btn unClickMen" id="men">남자</label>
-                            <label for="womenI" class="block-btn unClickWomen" id="women">여자</label>
+                            <label for="menI" class="block-btn unClickMen" id="men" style="height: auto;">남자</label>
+                            <label for="womenI" class="block-btn unClickWomen" id="women" style="height: auto;">여자</label>
                         </div>
 
 
@@ -131,7 +131,7 @@
             </div>
             <div class="bottom-box">
                 <div class="register-box-full">
-                    <button type="button" name="button" onclick="document.getElementById('join-form-button').click()">회원가입</button>
+                    <button type="button" name="button" {{--onclick="document.getElementById('join-form-button').click()"--}}>회원가입</button>
                 </div>
             </div>
         </div>

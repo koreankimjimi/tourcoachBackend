@@ -1,4 +1,5 @@
 window.onload = ()=>{
+    $("#loading").remove();
     $("#men").click(()=>{
         if($('#men').hasClass('unClickMen')){
         $('#men').removeClass('unClickMen');

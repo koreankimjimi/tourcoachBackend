@@ -10,11 +10,11 @@
             <img src="/img/RESOURCE/TravelRecommendations/ic_tour_propose.png" alt="" draggable="false">
             <div>사용자에게 알맞는 여행지 추천 목록을 알려드립니다.</div>
         </section>
-
-        @foreach($datas as $data)
-        <section class="card twoCard" style="cursor: pointer" onclick="location.href = '/tour/detail/{{$data->id}}'">
+        <?php $arr = ['oneCard','twoCard','threeCard','normalCard']?>
+        @foreach($datas as $key => $data)
+        <section class="card {{ $arr[$key] }}" style="cursor: pointer" onclick="location.href = '/tour/detail/{{$data->id}}'">
             <div class="card-title">
-                {{ $data->name }}
+                {{ $data->realName }}
             </div>
             <div class="card-subTitle">
 
@@ -60,6 +60,7 @@
                             {{ $data->small_cate }}
                         </div>
                     </div>
+                    
                 </div>
                 <div class="card-right">
                     <iframe
@@ -429,5 +430,16 @@
     </div>
 
     <footer>
-    </footer>
+          <div class="footer-logo">
+            <img src="/img/RESOURCE/CategoryResult/ic_tour_coach.png" alt="">
+          </div>
+          <div class="footer-index">
+            ©2017 CIRCLE TOURCOACH ALL RIGHT RESERVED. </br>
+            26. JONG-RO, JONGNO-GU, SEOUL</br>
+            SKT Smarteen App Challenge 2017
+          </div>
+          <div class="footer-icon">
+            <img src="/img/RESOURCE/CategoryResult/ic_skt.png" alt="">
+          </div>
+        </footer>
 @endsection

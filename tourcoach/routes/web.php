@@ -33,6 +33,9 @@ Route::post("/tour/productLike","TourController@productLike")->name("tourProduct
 Route::post("/tour/sendKakao/{no}","TourController@sendKakao")->name("tourSendKakao");
 // 리뷰 가져오기
 Route::post("/tour/getReview","TourController@getReview")->name("tourGetReview");
+// 검색 결과 뷰
+Route::get("/tour/searchResult","TourController@searchResult")->name("toursearchResultView");
+
 
 // @UserController
 // 로그인 뷰
@@ -63,7 +66,8 @@ Route::post('/user/foundId','UserController@foundId')->name('foundId');
 Route::get('/user/foundPass','UserController@foundPass')->name('foundPassView');
 // 비밀번호 찾기
 Route::post('/user/foundPass','UserController@foundPass')->name('foundPass');
-
+// 카카오톡 토큰
+Route::post('/user/kakaoToken','UserController@kakaoToken')->name('kakaoToken');
 
 
 // test
@@ -73,6 +77,9 @@ Route::get('/test/test2','TestController@test2')->name('Test2');
 Route::get('/test/send','TestController@send')->name('send');
 Route::get('/test/test','TestController@test')->name('TestPost');
 Route::get('/t','TestController@t')->name('T');
+
+// 날씨
+Route::get('/test/weather','TestController@weather')->name('tourcoachWeather');
 
 // 개인정보보호 URL
 Route::get('/userPrivate',function(){

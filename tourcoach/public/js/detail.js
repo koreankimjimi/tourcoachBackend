@@ -1,4 +1,5 @@
 window.onload = function(){
+    $("#loading").remove();
     var Apps = function(){
 
         var app = {
@@ -49,7 +50,7 @@ window.onload = function(){
     apps.start();
 
 
-    // 좋아요 
+    // 좋아요
     $("#likeBtn").on("click",function(){
         var no = $(this).attr("data");
         var btn = $(this);
@@ -64,14 +65,73 @@ window.onload = function(){
             data : { tourId : no },
             success : function(data){
                 if (data == "true"){
-                    btn.fadeOut(500,function(){
-                        btn.remove();
-                    })
-
+                    location.href = '/tour/detail/'+no;
                 }
 
             }
         })
+    })
+
+    var projectCount = [0, 0, 0, 0, 0];
+    var projectMargin = [0, 0, 0, 0, 0];
+
+
+
+    $(".rightBtn1").click(function(){
+        if(window.innerWidth < 600){
+            if(projectCount[0] > 3){
+
+            }
+            else{
+                projectMargin[0] += window.innerWidth/1*-1 - 25;
+                projectCount[0]++;
+                $(".a").animate({"margin-left":projectMargin[0]},1000)
+            }
+        }
+        else if(window.innerWidth > 1200){
+            if(projectCount[0] > 2){
+
+            }
+            else{
+                projectMargin[0] += window.innerWidth/4*-1;
+                projectCount[0]++;
+                $(".a").animate({"margin-left":projectMargin[0]},1000)
+            }
+        }
+        else{
+            if(projectCount[0] > 6){
+
+            }
+            else{
+                projectMargin[0] += window.innerWidth/4*-1;
+                projectCount[0]++;
+                $(".a").animate({"margin-left":projectMargin[0]},1000)
+            }
+        }
+    })
+
+    $(".leftBtn1").click(function(){
+        if(window.innerWidth < 600){
+
+            if(projectCount[0] == 0){
+
+            }
+            else{
+                projectMargin[0] += window.innerWidth/1 + 25;
+                projectCount[0]--;
+                $(".a").animate({"margin-left":projectMargin[0]},1000)
+            }
+        }
+        else{
+            if(projectCount[0] == 0){
+
+            }
+            else{
+                projectMargin[0] += window.innerWidth/4;
+                projectCount[0]--;
+                $(".a").animate({"margin-left":projectMargin[0]},1000)
+            }
+        }
     })
 }
 

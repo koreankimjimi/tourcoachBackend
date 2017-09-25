@@ -4,14 +4,49 @@
 <link rel="stylesheet" href="/css/myPage.css">
 @endpush
 @push('js')
-<script src="/js/myPage.js"></script>
+{{--<script src="/js/myPage.js"></script>--}}
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type='text/javascript'>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('36fc8efc43445022fdd021f246d39ce1');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+            var data = authObj;
+            var accessToken = data.access_token;
+            var refreshToken = data.refresh_token;
+            var userId = $("#userId").val();
+
+
+
+            $.post("/user/kakaoToken",{"access_token" : accessToken , "refresh_token" : refreshToken , "userId" : userId},function(){
+                location.href = "/user/mypage";
+            });
+            
+
+        },
+        fail: function(err) {
+            alert(JSON.stringify(err));
+        }
+    });
+    //]]>
+</script>
 @endpush
 
 @section('content')
-
+    <input type="hidden" value="{{session()->get('loginData')->id}}" id="userId">
     <div class="containor">
         <section class="account">
-            <div class="google-box account-box google-abled">
+            <div class="google-box account-box google-abled" style="display: none">
                 <img src="/img/RESOURCE/Mypage/ic_goolge_abled.png" alt="" draggable="false">
                 <div class="account-title">
                     구글 계정연결 <span>활성화</span>
@@ -26,8 +61,9 @@
                     구글 계정으로 연결하기
                 </div>
             </div>
+            @if( isset($kakaoToken) )
             <div class="kakao-box account-box">
-                <img src="/img/RESOURCE/Mypage/ic_kakao_활성화.png" alt="" draggable="false">
+                <img src="/img/RESOURCE/Mypage/ic_kakao_활성화.png" alt="" draggable="false" >
                 <div class="account-title">
                     카카오 계정연결 <span>활성화</span>
                 </div>
@@ -35,13 +71,16 @@
                     계정 연결 비활성화는 <a href="#">여기</a>를 클릭해 주세요
                 </div>
             </div>
-            <div class="account-box kakao-disabled">
+            @endif
+            @if( !isset($kakaoToken) )
+            <div class="account-box kakao-disabled" id="kakao-login-btn">
                 <img src="/img/RESOURCE/Mypage/ic_kakao_비활성화.png" alt="" draggable="false">
                 <div class="account-title">
-                    카카오 계정으로 연결하기
+
                 </div>
             </div>
-            <div class="fb-box account-box">
+            @endif
+            <div class="fb-box account-box" style="display: none">
                 <img src="/img/RESOURCE/Mypage/ic_facebook_활성화.png" alt="" draggable="false">
                 <div class="account-title">
                     페이스북 계정연결 <span>활성화</span>
@@ -54,6 +93,21 @@
                 <img src="/img/RESOURCE/Mypage/ic_facebook_비활성화.png" alt="" draggable="false">
                 <div class="account-title">
                     페이스북 계정으로 연결하기
+                </div>
+            </div>
+            <div class="nugu-box account-box" style="display: none">
+                <img src="/img/RESOURCE/Mypage/ic_facebook_활성화.png" alt="" draggable="false">
+                <div class="account-title">
+                    페이스북 계정연결 <span>활성화</span>
+                </div>
+                <div class="account-reset">
+                    계정 연결 비활성화는 <a href="#">여기</a>를 클릭해 주세요
+                </div>
+            </div>
+            <div class="account-box nugu-disabled">
+                <img src="/img/RESOURCE/Mypage/ic_nugu_png.png" alt="" draggable="false" width="49" height="113">
+                <div class="account-title">
+                    누구 디바이스 연결하기
                 </div>
             </div>
         </section>
@@ -70,8 +124,12 @@
                             <div class="list-number">
                                 {{ $data->realId }}
                             </div>
-                            <div class="list-name" style="cursor: pointer" onclick="location.href = '/tour/detail/{{ $data->id }}'">
-                                {{ $data->name }}
+                            <div class="list-name" style="cursor: pointer" onclick="location.href = '/tour/detail/{{ $data->id }}'" title="{{ $data->name }}">
+                                {{ mb_substr($data->name,0,7) }}
+                                @if( mb_strlen($data->name) > 7)
+                                    ...
+                                @endif
+
                             </div>
                             <div class="list-locate">
                                 {{ $data->address }}
@@ -107,8 +165,11 @@
                         <div class="list-number">
                             {{ $data->realId }}
                         </div>
-                        <div class="list-name" style="cursor: pointer" onclick="location.href = '/tour/detail/{{ $data->id }}'">
-                            {{ $data->name }}
+                        <div class="list-name" style="cursor: pointer" onclick="location.href = '/tour/detail/{{ $data->id }}'" title="{{ $data->name }}">
+                            {{ mb_substr($data->name,0,7) }}
+                            @if( mb_strlen($data->name) > 7)
+                                ...
+                            @endif
                         </div>
                         <div class="list-locate">
                             {{ $data->address }}

@@ -1,3 +1,11 @@
+<section id="loading" style="z-index:1000000;position:fixed;width: 100%;height: 100%;background-color: #fff;">
+    <style>
+        html{
+            overflow: hidden;
+        }
+    </style>
+    <img src="/img/RESOURCE/Main/Ball.svg" alt="loading" style="position: relative;top: 50%;left: 50%;transform: translate(-50%,-50%)">
+</section>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,20 +44,21 @@
     <link rel="apple-touch-icon" href="/img/favicon/favicon.ico">
 </head>
 <body>
+
 <header>
-    <div class="header-icon">
+    <div class="header-icon" onclick="location.href='/'">
         <img src="/img/RESOURCE/Main/ic_airplane.png" alt="logo">
     </div>
-    <div class="header-logo">
+    <div class="header-logo" onclick="location.href='/'">
         <img src="/img/RESOURCE/Main/ic_tour_coach.png" alt="logo">
     </div>
     <div class="null-box">
         <!-- 기둥뒤에 공간있어요 -->
     </div>
     <nav>
-        {{--<div class="nav-box">--}}
-            {{--<a href="/tour/cateSearch">분야별 여행지</a>--}}
-        {{--</div>--}}
+        <div class="nav-box">
+            <a href="/tour/cateSearch">분야별 여행지</a>
+        </div>
         @if( !session()->has('loginData'))
         <div class="nav-box">
             <a href="/user/join">회원가입</a>
@@ -78,7 +87,7 @@
     @yield('content')
     <script src="/js/jquery-1.11.1.js"></script>
     <script src="/js/main.js"></script>
-    <script src="/js/Kjm.js"></script>
+    {{--<script src="/js/Kjm.js"></script>--}}
     @stack('js')
 </body>
 </html>

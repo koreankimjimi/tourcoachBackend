@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User as UserModel;
 use App\ProductViewCount as ViewCountMoel;
+use App\KakaoToken as KakaoTokenModel;
 
 class UserController extends Controller
 {
@@ -253,6 +254,7 @@ class UserController extends Controller
                 product_view_counts as A LEFT JOIN tourdatas as B 
                 ON A.productId = B.id 
                 WHERE A.userId = ".$req->session()->get('loginData')->id."
+                ORDER BY date DESC
                 LIMIT 0,10";
         // 사용자 코치 데이터
         $coachDatas = DB::select( DB::raw($sql) );
@@ -267,10 +269,14 @@ class UserController extends Controller
                  tourdatas as B 
                  ON A.tourId = B.id 
                  WHERE A.userId =  ".$req->session()->get('loginData')->id."
+                 ORDER BY date DESC
                  LIMIT 0,10";
-
+        // 사용자 추천 데이터
         $proposeDatas = DB::select( DB::raw($sql2) );
-        return view('user.mypage',['coachDatas' => $coachDatas , 'proposeDatas' => $proposeDatas]);
+
+        $kakaoToken = KakaoTokenModel::where('userId' , '=' , $req->session()->get('loginData')->id)->first();
+
+        return view('user.mypage',['coachDatas' => $coachDatas , 'proposeDatas' => $proposeDatas , 'kakaoToken' => $kakaoToken]);
     }
 
     // 로그아웃
@@ -302,5 +308,17 @@ class UserController extends Controller
 
     public function modify(Request $req , $kinds){
         return view('user.modify');
+    }
+
+
+    // 카카오톡 토큰
+    public function kakaoToken(Request $req){
+        $accessToken = $req->input('access_token');
+        $refreshToken = $req->input('refresh_token');
+        $userId = $req->input('userId');
+
+        KakaoTokenModel::create(array('userId' => $userId , 'accessToken' => $accessToken , 'refreshToken' => $refreshToken));
+
+        echo true;
     }
 }

@@ -2,14 +2,15 @@
 var projectCount = [0, 0, 0, 0, 0];
 var projectMargin = [0, 0, 0, 0, 0];
 window.onload = ()=>{
-    console.log('Test');
+    $("#loading").remove();
+
     $(".rightBtn1").click(function(){
         if(window.innerWidth < 600){
             if(projectCount[0] > 3){
 
             }
             else{
-                projectMargin[0] += window.innerWidth/1*-1;
+                projectMargin[0] += window.innerWidth/1*-1 - 25;
                 projectCount[0]++;
                 $(".a").animate({"margin-left":projectMargin[0]},1000)
             }
@@ -43,7 +44,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin += window.innerWidth/1;
+                projectMargin[0] += window.innerWidth/1 + 25;
                 projectCount[0]--;
                 $(".a").animate({"margin-left":projectMargin[0]},1000)
             }
@@ -65,7 +66,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[1] += window.innerWidth/1*-1;
+                projectMargin[1] += window.innerWidth/1*-1 - 25;
                 projectCount[1]++;
                 $(".b").animate({"margin-left":projectMargin[1]},1000)
             }
@@ -99,7 +100,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[1] += window.innerWidth/1;
+                projectMargin[1] += window.innerWidth/1 + 25;
                 projectCount[1]--;
                 $(".b").animate({"margin-left":projectMargin},1000)
             }
@@ -121,7 +122,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[2] += window.innerWidth/1*-1;
+                projectMargin[2] += window.innerWidth/1*-1 - 25;
                 projectCount[2]++;
                 $(".c").animate({"margin-left":projectMargin[2]},1000)
             }
@@ -155,7 +156,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[2] += window.innerWidth/1;
+                projectMargin[2] += window.innerWidth/1 + 25;
                 projectCount[2]--;
                 $(".c").animate({"margin-left":projectMargin[2]},1000)
             }
@@ -177,7 +178,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[3] += window.innerWidth/1*-1;
+                projectMargin[3] += window.innerWidth/1*-1 - 25;
                 projectCount[3]++;
                 $(".d").animate({"margin-left":projectMargin[3]},1000)
             }
@@ -211,7 +212,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[3] += window.innerWidth/1;
+                projectMargin[3] += window.innerWidth/1 + 25;
                 projectCount[3]--;
                 $(".d").animate({"margin-left":projectMargin[3]},1000)
             }
@@ -233,7 +234,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[4] += window.innerWidth/1*-1;
+                projectMargin[4] += window.innerWidth/1*-1 - 25;
                 projectCount[4]++;
                 $(".e").animate({"margin-left":projectMargin[4]},1000)
             }
@@ -267,7 +268,7 @@ window.onload = ()=>{
 
             }
             else{
-                projectMargin[4] += window.innerWidth/1;
+                projectMargin[4] += window.innerWidth/1 + 25;
                 projectCount[4]--;
                 $(".e").animate({"margin-left":projectMargin[4]},1000)
             }
