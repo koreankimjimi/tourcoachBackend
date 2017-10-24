@@ -1,10 +1,10 @@
-<section id="loading" style="z-index:1000000;position:fixed;width: 100%;height: 100%;background-color: #fff;">
+<section id="loading" style="z-index:1000000;position:fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: #389AD7;">
     <style>
         html{
             overflow: hidden;
         }
     </style>
-    <img src="/img/RESOURCE/Main/Ball.svg" alt="loading" style="position: relative;top: 50%;left: 50%;transform: translate(-50%,-50%)">
+    <img src="/img/RESOURCE/Main/giphy.gif" alt="loading" style="position: relative;top: 50%;left: 50%;transform: translate(-50%,-50%)">
 </section>
 <!DOCTYPE html>
 <html>
@@ -56,6 +56,7 @@
         <!-- 기둥뒤에 공간있어요 -->
     </div>
     <nav>
+
         <div class="nav-box">
             <a href="/tour/cateSearch">분야별 여행지</a>
         </div>
@@ -80,6 +81,11 @@
                 <a href="/user/logout">로그아웃</a>
             </div>
         @endif
+        {{--<div class="nav-box" style="height: 10px;margin-left: 1rem">--}}
+            {{--<a href="https://www.hotelscombined.co.kr/" target="_blank" title="호텔스컴바인">--}}
+            {{--<img src="/img/RESOURCE/Main/hotels.png" alt="hotls" width="50" height="50" style="margin-top: -15px;" >--}}
+            {{--</a>--}}
+        {{--</div>--}}
     </nav>
 </header>
 

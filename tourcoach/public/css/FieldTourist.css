@@ -25,32 +25,37 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+	position: relative;
 }
 .page-card .page-name .project-header .project-more img{
     width:auto;
-    height: 30px;
+    height: 25px;
+
 }
 .page-card .page-name .project-header .more-button{
-    border: 1px solid #a5a5a5;
+    border: 1px solid #010203;
     border-radius: 18px;
     padding: 0.5rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     text-align: center;
-    color:#a5a5a5;
+    color: black;
+	font-size: 14px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
     min-width: 80px;
     margin-bottom: 10px;
     /*width:140px;*/
+	position: absolute;
+	right: 0px;
 }
 .page-card .page-name .project-header .more-button:hover{
     background-color:#f2f2f2;
     /*color:white;*/
 }
 .page-card .page-name .project-side {
-    margin-top: 0.5rem;
+    margin-top: 0.2rem;
     font-size: 9pt;
     margin-bottom: 0.5rem;
 }
@@ -67,7 +72,7 @@ body{
     margin-top: 1rem;
 }
 .page-card .search-box .search-input{
-    width:50%;
+    width:97%;
     margin-right: 1rem;
     height: 40px;
     display: flex;
@@ -104,13 +109,16 @@ body{
     border: 1px solid black;
     margin-bottom: 1rem;
     border-radius: 20px;
-
+	font-size: 15px;
 }
 .page-card .project .project-box{
     display: flex;
-    flex-direction: column;;
-    box-shadow: 2px 2px 20px 1px gray;
+    flex-direction: column;
+    box-shadow: 2px 2px 15px 1px gray;
     margin-right:1.5rem;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+    border-radius: 18px;
 }
 
 .project{
@@ -118,12 +126,12 @@ body{
 }
 .page-card .project .project-box .project-card{
     /*background-image: url('../img/temp/temp.png');*/
+    border-radius: 8px;
     width:360px;
     height:230px;
     background-size: cover;
     display:flex;
     flex-direction: column;
-
 }
 /*카테고리별 백그라운드 이미지*/
 .construct{
@@ -159,6 +167,7 @@ body{
     flex:1;
 }
 .project_bottom_explain{
+    border-radius: 0px 0px 8px 8px;
     display: flex;
     flex-basis: 4rem;
     flex-shrink: 2;
@@ -193,12 +202,14 @@ body{
 }
 .project-subName{
     font-size: 5pt;
+	color: rgba(255,255,255,0.6);
 }
 
 .rightBtn {
     position: absolute;
     z-index: 10;
-    left: calc(100% - 35px);
+    right: 0px;
+	top: 0px;
     margin-top: 50px;
     cursor: pointer;
 }
@@ -206,11 +217,14 @@ body{
     height: 100px;
     width:auto;
 }
-
+.btn_box{
+	position: relative;
+}
 .leftBtn {
     position: absolute;
     z-index: 10;
-    right: calc(100% - 25px);
+    left: 0px;
+	top: 0px;
     margin-top: 50px;
     cursor: pointer;
 }
@@ -218,7 +232,10 @@ body{
     height: 100px;
     width:auto;
 }
-
+.project-name > a{
+	color: #fff;
+	text-decoration: none;
+}
 
 
 @media (max-width : 500px){

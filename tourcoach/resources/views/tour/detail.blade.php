@@ -2,7 +2,11 @@
 
 @push('js')
     {{--<script src="js/main.js" charset="utf-8"></script>--}}
-
+    <script>
+        $("#naverBlog").on("click",function(){
+            window.open("https://section.blog.naver.com/Search/Post.nhn?keyword={{$tourData->name}}","_blank");
+        })
+    </script>
     <script src="/js/detail.js"></script>
     <script src="/js/planet.js"></script>
 @endpush
@@ -75,7 +79,7 @@
         <div class="info-box travel-box">
             <div class="title-box">
                 <div class="main-title">
-                    <img src="/img/RESOURCE/TravelInformation/ic_TravelInformation.png" alt="" draggable="false">
+                    <img src="/img/RESOURCE/TravelInformation/ic_TravelInformation.png" alt="" draggable="false" style="margin-bottom: 20px;">
                 </div>
                 <div class="sub-title">
                     해당 여행지에 대한 정보를 자세히 알려드립니다.
@@ -131,6 +135,19 @@
                                 {{ $tourData->small_cate }}
                             </div>
                         </div>
+                        <div class="card-time card-info">
+                            <div class="info-title">
+                                <div class="title">
+                                    숙소
+                                </div>
+                                <div class="subTitle">
+                                    Hotels Combined
+                                </div>
+                            </div>
+                            <div class="info-index">
+                                <a style="color: #3c3c3c;" href="https://www.hotelscombined.co.kr/" target="_blank">숙소 찾으러 가기</a>
+                            </div>
+                        </div>
                         <div class="card-time card-info tmap">
                             <div class="info-title">
                                 <div class="title">
@@ -146,11 +163,24 @@
                         </div>
                     </div>
                     <div class="card-right">
-                        {{--<img src="/img/RESOURCE/TravelRecommendations/bg_tower.png" alt="" draggable="false">--}}
+                        <div id="slideBox">
+                            <div class="slide">
+                                @foreach($tourImg as $img)
+                                <img src="{{$img}}" alt="" draggable="false" style="width:450px;height: 280px;border-radius: 10px;">
+                                @endforeach
+                            </div>
+                            <div class="right btn">
+                                <img src="/img/RESOURCE/TravelInformation/ic_right_arrow.png" alt="">
+                            </div>
+                            <div class="left btn">
+                                <img src="/img/RESOURCE/TravelInformation/ic_left_arrow.png" alt="">
+                            </div>
+                        </div>
+
                         <iframe
                                 id="detailGoogleMap"
-                                width="500"
-                                height="300"
+                                width="450"
+                                height="280"
                                 style="border-radius: 5px;margin-left: 10px;"
                                 frameborder="0" style="border:0"
                                 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDqWBda5DAqcIJQIWAs6_kYjTPCLUd1Ejw
@@ -232,27 +262,35 @@
                 </div>
 
             </section>
-            @if(session()->has('loginData'))
+
             <section class="social">
-                <div class="kakao social-box" style="width: 100%;cursor: pointer;" onclick="sendKakao({{ $tourData->id }})">
+                @if(session()->has('loginData'))
+                <div class="kakao social-box" style="cursor: pointer;" onclick="sendKakao({{ $tourData->id }})">
                     <img src="/img/RESOURCE/TravelInformation/ic_kakao.png" alt="" draggable="false">
                     <div class="social-text">
                         카카오톡으로 내보내기
                     </div>
                 </div>
-                {{--<div class="fb social-box">--}}
-                    {{--<img src="/img/RESOURCE/TravelInformation/ic_facebook.png" alt="" draggable="false">--}}
-                    {{--<div class="social-text">--}}
-                        {{--페이스북으로 내보내기--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                @endif
+                @if( !session()->has('loginData'))
+                <div class="fb social-box" id="naverBlog" style="width: 100%;background-color:#1DC800" >
+                @endif
+                @if( session()->has('loginData') )
+                <div class="fb social-box" id="naverBlog" style="background-color:#1DC800">
+                @endif
+                    <img src="/img/RESOURCE/TravelInformation/ic_naver.png" alt="" draggable="false" style="width: 60px;height: 60px;">
+                    <div class="social-text">
+                        네이버 블로그 살펴보기
+                    </div>
+                </div>
+
             </section>
-            @endif
+
         </div>
         <div class="review-box travel-box">
             <div class="title-box">
                 <div class="main-title">
-                    <img src="/img/RESOURCE/TravelInformation/ic_review.png" alt="" draggable="false">
+                    <img src="/img/RESOURCE/TravelInformation/ic_review.png" alt="" draggable="false" style="margin-bottom: 20px;">
                 </div>
                 <div class="sub-title">
                     해당 여행지에 다녀온 후기들을 살펴보실 수 있습니다.
@@ -278,21 +316,23 @@
                 </div>
                 @endforeach
                     <button data="{{ $tourData->id }}" class="reviewMoreBtn" style="font-size: 14pt;padding-bottom:15px;background-color: #fff;margin-right:10px;float:left;width: 100%;height: 40px;border: none;outline: none;cursor: pointer;  color: #333;cursor: pointer;">더보기</button>
-                @if(session()->has('loginData'))
-                <div class="review-list input-box">
-                    <div class="input-title">리뷰 작성</div>
-                    <form action="/tour/letterWrite/{{$tourData->id}}" method="post" style="width: 100%">
-                        {{ csrf_field() }}
-                        <input type="text" name="content" required>
 
-                        <button id="reviewSubmit" type="submit" style="display: none"></button>
-                    </form>
-
-                </div>
-                <button onclick="document.getElementById('reviewSubmit').click();" style="float: right;width: 80px;height: 40px;border: none;outline: none;cursor: pointer;    background-color: #2d3b55;color: white;cursor: pointer;">작성</button>
-                @endif
 
             </section>
+            @if(session()->has('loginData'))
+            <section class="review-section" style="margin-top: 40px;padding-bottom:60px;">
+
+                    <div class="review-list input-box">
+                        <div class="input-title">리뷰 작성</div>
+                        <form action="/tour/letterWrite/{{$tourData->id}}" method="post" style="width: 100%">
+                            {{ csrf_field() }}
+                            <input type="text" name="content" required style="margin-top: 20px;">
+                            <button id="reviewSubmit" type="submit" style="display: none"></button>
+                        </form>
+                    </div>
+                    <button onclick="document.getElementById('reviewSubmit').click();" style="font-size: 14pt;padding-bottom:15px;background-color: #fff;margin-right:10px;float:left;width: 100%;height: 40px;border: none;outline: none;cursor: pointer;  color: #333;cursor: pointer;">작성하기</button>
+            </section>
+            @endif
             {{--리뷰 팝업--}}
             <section id="reviewPop" class="review-section" style="z-index:10000;overflow-y:scroll;padding-bottom: 60px;background-color:#fff;position: fixed;width: 80%;height: 90%;top: 50%;left: 50%;transform: translate(-50%,-50%);display: none">
 
@@ -322,7 +362,7 @@
     <div class="fit-box travel-box-side project-page page-card main-page-card" id="p2">
         <div class="title-box">
             <div class="main-title">
-                <img src="/img/RESOURCE/TravelInformation/ic_goodTour.png" alt="" draggable="false">
+                <img src="/img/RESOURCE/TravelInformation/ic_goodTour.png" alt="" draggable="false" style="margin-bottom: 20px;">
             </div>
             <div class="sub-title">
                 비슷한 여행지의 목록을 알려드립니다.

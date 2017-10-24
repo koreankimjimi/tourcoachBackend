@@ -80,6 +80,7 @@ body{
   box-shadow: 2px 2px 20px 1px gray;
   /*border: 1px solid black;*/
   padding: 1.8rem;
+  border-radius: 10px;
 }
 .container .review-box .review-section .review-list{
   border-bottom: 1px solid #c2c2c2;
@@ -106,6 +107,51 @@ body{
 .tmap{
   display: none;
 }
+
+#slideBox{
+  width: 450px;
+  height:280px;
+  overflow: hidden;
+  position: relative;
+}
+#slideBox > .slide{
+  width: 1000%;
+  height: 100%;
+  float: left;
+}
+#slideBox > .slide >img{
+  float: left;
+  margin: 0;
+}
+
+#slideBox > .btn{
+  width: 20px;
+  height: 60px;
+  /*background-color: rgba(0,0,0,0.7);*/
+  color: #fff;
+  position: absolute;
+  top:50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+  font-size: 30px;
+  cursor: pointer;
+  text-align: center;
+}
+#slideBox > .btn > img{
+  width: auto;
+  height:auto;
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+
+#slideBox > .left{
+  left:10px;
+}
+#slideBox > .right{
+  right:20px;
+}
 @media (max-width : 650px){
   .container .info-box .social{
     /*border: 1px solid black;*/
@@ -119,4 +165,8 @@ body{
   .tmap{
     display: block;
   }
+  .card-right > #slideBox{
+    display: none;
+  }
 }
+

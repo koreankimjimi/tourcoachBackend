@@ -56,6 +56,9 @@ html, body{
 .container .passBox .input-table .table-box .form-box .input-box .input-title{
   width:120px;
 }
+.container .loginBox .input-table .table-box .form-box .input-box input[type='password']{
+  font-family: none;
+}
 .container .loginBox .input-table .table-box .form-box .input-box input{
   border: none;
   outline: none;

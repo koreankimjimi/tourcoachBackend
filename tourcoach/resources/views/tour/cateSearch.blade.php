@@ -4,11 +4,6 @@
 @push('css')
 <link rel="stylesheet" href="/css/FieldTourist.css">
 <link rel="stylesheet" href="/css/footer.css">
-<style>
-    .project-name > a{
-        color: #fff;
-    }
-</style>
 @endpush
 
 @section('content')
@@ -33,7 +28,7 @@
                 {{--<input type="text" name="" value="" placeholder="카테고리를 선택하세요">--}}
                 {{--</div>--}}
                 <div class="search-btn" onclick="document.getElementById('searchBtn').click()">
-                    검색
+                    검&nbsp;&nbsp;&nbsp;&nbsp;색
                 </div>
             </div>
         </div>
@@ -42,7 +37,7 @@
         {{--<div class="page-name">--}}
             {{--<div class="project-header">--}}
                 {{--<div class="project-more">--}}
-                    {{--<img src="/img/RESOURCE/FieldTourist/ic_주변_여행지_검색.png" alt="" id="long" draggable="false">--}}
+                    {{--<img src="/img/RESOURCE/FieldTourist/ic_주변_여행지_검색.png" alt="" id="long" draggable="false">--}}
                 {{--</div>--}}
             {{--</div>--}}
             {{--<div class="project-side">--}}
@@ -85,7 +80,7 @@
                 <div class="project-more">
                     <img src="/img/RESOURCE/FieldTourist/ic_famuas.png" alt="" id="long">
                 </div>
-                <div class="more-button">
+                <div class="more-button" onclick="location.href = '/tour/category/topTour'">
                     더 알아보기
                 </div>
             </div>
@@ -145,7 +140,7 @@
                 <div class="project-more">
                     <img src="/img/RESOURCE/FieldTourist/ic_최근_여행지.png" alt="" id="long">
                 </div>
-                <div class="more-button">
+                <div class="more-button" onclick="location.href = '/tour/category/liveTour'">
                     더 알아보기
                 </div>
             </div>
@@ -205,7 +200,7 @@
                 <div class="project-more">
                     <img src="/img/RESOURCE/FieldTourist/ic_건축.png" alt="" id="short">
                 </div>
-                <div class="more-button">
+                <div class="more-button" onclick="location.href = '/tour/category/buildTour'">
                     더 알아보기
                 </div>
 
@@ -266,7 +261,7 @@
                 <div class="project-more">
                     <img src="/img/RESOURCE/FieldTourist/ic_문화.png" alt="" id="short">
                 </div>
-                <div class="more-button">
+                <div class="more-button" onclick="location.href = '/tour/category/cultureTour'">
                     더 알아보기
                 </div>
             </div>
@@ -327,7 +322,7 @@
                 <div class="project-more">
                     <img src="/img/RESOURCE/FieldTourist/ic_자연.png" alt="" id="short">
                 </div>
-                <div class="more-button">
+                <div class="more-button" onclick="location.href = '/tour/category/naturalTour'">
                     더 알아보기
                 </div>
 

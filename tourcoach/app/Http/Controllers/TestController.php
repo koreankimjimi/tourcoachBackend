@@ -70,7 +70,7 @@ class TestController extends Controller
 
             $name = $_GET['location'];
             // 여행지 데이터 가져오는 쿼리
-            $sql = "SELECT A.id as realId , A.area as area ,A.village as village , A.city as city , A.address as address , A.name as name  FROM 
+            $sql = "SELECT A.id as realId , A.imgUrl , A.area as area ,A.village as village , A.city as city , A.address as address , A.name as name  FROM 
                     tourdatas as A 
                     LEFT JOIN 
                     BestTour2016 as B
@@ -185,9 +185,16 @@ class TestController extends Controller
 
         }
 
+
             ViewCountModel::create(array('userId' => '6' , 'productId' => $tourData->realId , 'date' => date("Y-m-d H:i:s")));
-            $msg = $name."는 ".$tourData->area." ".$tourData->city." ".$tourData->village." 에 위치하며 현재 ".$name."의 날씨는 ".$weather['weather']."도 하늘은 ".$weather['sky']."입니다. 자세한 내용은 메신저로 전송하였습니다.";
-            echo "{\"id\":\"$tourData->realId\",\"name\":\"$name\",\"msg\":\"$msg\"}";
+            $msg = $name."는 ".$tourData->area." ".$tourData->city." ".$tourData->village." 에 위치하며 현재 ".$name."의 날씨는 ".$weather['weather']."도 하늘은 ".$weather['sky']."입니다. 자세한 내용은 메신저로 전송하였습니다. ";
+
+            if(strpos($weather['sky'], "비") !== false) {
+                $msg .= "비가오니 우산은 꼭챙기시기 바랍니다";
+            }
+
+            $imgUrl = json_decode($tourData->imgUrl)[0];
+            echo "{\"id\":\"$tourData->realId\",\"name\":\"$name\",\"msg\":\"$msg\",\"location\":\"$tourData->address\",\"img\":\"$imgUrl\"}";
 
     }
 
@@ -229,32 +236,60 @@ class TestController extends Controller
             ON A.location = B.address
             WHERE B.area LIKE "%성남%" or B.city LIKE "%성남%" or B.village LIKE "%성남%"
          * */
+$sql = "SELECT B.id, 
+       B.NAME AS realName, 
+       B.address, 
+       B.big_cate, 
+       B.middle_cate, 
+       B.cnt,
+       B.imgUrl,
+        
+       CASE B.middle_cate 
+         WHEN '건축/조형물' THEN 'construct' 
+         WHEN '문화시설' THEN 'culture' 
+         WHEN '산업관광지' THEN 'industry' 
+         WHEN '역사관광지' THEN 'history' 
+         WHEN '체험관광지' THEN 'experience' 
+         WHEN '관광자원' THEN 'tourism' 
+         WHEN '휴향관광지' THEN 'recreation' 
+         WHEN '섬' THEN 'island' 
+         WHEN '자연관광지' THEN 'nature' 
+         ELSE 'construct' 
+       END    AS middle_cate_back 
+FROM   (SELECT * 
+        FROM   tourdatas AS A 
+               LEFT JOIN (SELECT tourid, 
+                                 Count(*) AS cnt 
+                          FROM   product_likes 
+                          GROUP  BY tourid) AS B 
+                      ON A.id = B.tourid 
+        ORDER  BY cnt DESC) AS B 
+WHERE  B.area LIKE '%".$location."%' 
+        OR B.city LIKE '%".$location."%' 
+        OR B.village LIKE '%".$location."%' 
+ORDER  BY cnt DESC limit 0,3";
 
-         $sql = "SELECT DISTINCT(B.id) ,A.name , B.name as realName, B.address , B.big_cate ,B.middle_cate , ".
-                "CASE B.middle_cate
-                          WHEN '건축/조형물' THEN 'construct'
-                          WHEN '문화시설' THEN 'culture'
-                          WHEN '산업관광지' THEN 'industry'
-                          WHEN '역사관광지' THEN 'history'
-                          WHEN '체험관광지' THEN 'experience'
-                          WHEN '관광자원' THEN 'tourism' 
-                          WHEN '휴향관광지' THEN 'recreation' 
-                          WHEN '섬' THEN 'island'
-                          WHEN '자연관광지' THEN 'nature'
-                          else 'construct'
-                          end as middle_cate_back ".
-                "FROM BestTour2016 AS A ".
-                "RIGHT JOIN (SELECT * ".
-                "FROM tourdatas as A ".
-                "LEFT JOIN ".
-                "(SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B ".
-                "ON A.id = B.tourId ".
-                "ORDER BY cnt DESC) as B ".
-                "ON A.location = B.address ".
-                "WHERE B.area LIKE \"%$location%\" or B.city LIKE \"%$location%\" or B.village LIKE \"%$location%\" ".
-                "LIMIT 0,5";
+
         $tourData = DB::select( DB::raw($sql) );
+/*
 
+SELECT DISTINCT(B.id) ,A.name , B.name as realName, B.address , B.big_cate ,B.middle_cate ,CASE B.middle_cate
+			  WHEN '건축/조형물' THEN 'construct'
+			  WHEN '문화시설' THEN 'culture'
+			  WHEN '산업관광지' THEN 'industry'
+			  WHEN '역사관광지' THEN 'history'
+			  WHEN '체험관광지' THEN 'experience'
+			  WHEN '관광자원' THEN 'tourism' 
+			  WHEN '휴향관광지' THEN 'recreation' 
+			  WHEN '섬' THEN 'island'
+			  WHEN '자연관광지' THEN 'nature'
+			  else 'construct'
+			  end as middle_cate_back 
+			  FROM BestTour2016 AS A LEFT JOIN (SELECT * FROM tourdatas as A LEFT JOIN (SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B ON A.id = B.tourId ORDER BY cnt DESC) as B ON A.location = B.address WHERE B.area LIKE "%서울%" or B.city LIKE "%서울%" or B.village LIKE "%서울%"
+
+SELECT * FROM tourdatas as A LEFT JOIN (SELECT tourId , COUNT(*) as cnt from product_likes GROUP BY tourId) as B ON A.id = B.tourId ".
+  ORDER BY cnt DESC
+*/
 
         // 타이틀
         $title = [$tourData[0]->realName,$tourData[1]->realName,$tourData[2]->realName];
@@ -402,7 +437,9 @@ class TestController extends Controller
         );
         ProposeCountModel::insert($insertData);
         $msg = $tourData[0]->realName . " , ". $tourData[1]->realName ." , ". $tourData[2]->realName ."를 추천드립니다 자세한 내용은 메신저로 전송하였습니다.";
-        echo "{\"msg\" : \"$msg\"}";
+        $returnArray = array('name1' => $tourData[0]->realName , 'img1' => json_decode($tourData[0]->imgUrl)[0], 'location1' => $tourData[0]->address, 'name2' => $tourData[1]->realName , 'img2' => json_decode($tourData[1]->imgUrl)[0], 'location2' => $tourData[1]->address ,'name3' => $tourData[2]->realName , 'img3' => json_decode($tourData[2]->imgUrl)[0] , 'location3' => $tourData[2]->address , 'id1' => $tourData[0]->id , 'id2' => $tourData[1]->id , 'id3' => $tourData[2]->id);
+
+        echo json_encode($returnArray);
     }
 
     public function t(){
@@ -507,6 +544,62 @@ class TestController extends Controller
         mail($to, $subject, $message, $headers);
 
     }
+
+    public function naver(Request $req){
+        $client_id = "OYGf8ldsXz99EoGmlw3q";
+        $client_secret = "YivhJp5FtI";
+        $encText = urlencode("명동 사진");
+        $url = "https://openapi.naver.com/v1/search/image.json?query=".$encText."&display=50&start=1&sort=sim"; // json 결과
+        //  $url = "https://openapi.naver.com/v1/search/blog.xml?query=".$encText; // xml 결과
+        $is_post = false;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $is_post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $headers = array();
+        $headers[] = "X-Naver-Client-Id: ".$client_id;
+        $headers[] = "X-Naver-Client-Secret: ".$client_secret;
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec ($ch);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        echo "status_code:".$status_code."
+";
+        curl_close ($ch);
+        if($status_code == 200) {
+            dd(json_decode($response));
+        } else {
+            echo "Error 내용:".$response;
+        }
+    }
+
+    public function kakao(Request $req){
+        $client_id = "f9bcabafe137ae35fa2536f37923575d";
+
+        $encText = urlencode("경포대");
+        $url = "https://dapi.kakao.com/v2/search/image?query=".$encText; // json 결과
+        //  $url = "https://openapi.naver.com/v1/search/blog.xml?query=".$encText; // xml 결과
+        $is_post = false;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $is_post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $headers = array();
+        $headers[] = "Authorization: KakaoAK ".$client_id;
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec ($ch);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        echo "status_code:".$status_code."
+";
+        curl_close ($ch);
+        if($status_code == 200) {
+            dd(json_decode($response));
+        } else {
+            echo "Error 내용:".$response;
+        }
+    }
+
     private function chu($data){
 
     }

@@ -2,6 +2,7 @@
 
 @push('css')
 <link rel="stylesheet" href="/css/myPage.css">
+<link rel="stylesheet" href="/css/footer.css">
 @endpush
 @push('js')
 {{--<script src="/js/myPage.js"></script>--}}
@@ -46,7 +47,7 @@
     <input type="hidden" value="{{session()->get('loginData')->id}}" id="userId">
     <div class="containor">
         <section class="account">
-            <div class="google-box account-box google-abled" style="display: none">
+            <div class="google-box account-box google-abled">
                 <img src="/img/RESOURCE/Mypage/ic_goolge_abled.png" alt="" draggable="false">
                 <div class="account-title">
                     구글 계정연결 <span>활성화</span>
@@ -55,12 +56,12 @@
                     계정 연결 비활성화는 <a href="#">여기</a>를 클릭해 주세요
                 </div>
             </div>
-            <div class="account-box google-disabled">
-                <img src="/img/RESOURCE/Mypage/ic_goolge_abled.png" alt="" draggable="false">
-                <div class="account-title">
-                    구글 계정으로 연결하기
-                </div>
-            </div>
+            {{--<div class="account-box google-disabled">--}}
+                {{--<img src="/img/RESOURCE/Mypage/ic_goolge_abled.png" alt="" draggable="false">--}}
+                {{--<div class="account-title">--}}
+                    {{--구글 계정으로 연결하기--}}
+                {{--</div>--}}
+            {{--</div>--}}
             @if( isset($kakaoToken) )
             <div class="kakao-box account-box">
                 <img src="/img/RESOURCE/Mypage/ic_kakao_활성화.png" alt="" draggable="false" >
@@ -80,7 +81,7 @@
                 </div>
             </div>
             @endif
-            <div class="fb-box account-box" style="display: none">
+            <div class="fb-box account-box">
                 <img src="/img/RESOURCE/Mypage/ic_facebook_활성화.png" alt="" draggable="false">
                 <div class="account-title">
                     페이스북 계정연결 <span>활성화</span>
@@ -89,12 +90,12 @@
                     계정 연결 비활성화는 <a href="#">여기</a>를 클릭해 주세요
                 </div>
             </div>
-            <div class="account-box fb-disabled">
-                <img src="/img/RESOURCE/Mypage/ic_facebook_비활성화.png" alt="" draggable="false">
-                <div class="account-title">
-                    페이스북 계정으로 연결하기
-                </div>
-            </div>
+            {{--<div class="account-box fb-disabled">--}}
+                {{--<img src="/img/RESOURCE/Mypage/ic_facebook_비활성화.png" alt="" draggable="false">--}}
+                {{--<div class="account-title">--}}
+                    {{--페이스북 계정으로 연결하기--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="nugu-box account-box" style="display: none">
                 <img src="/img/RESOURCE/Mypage/ic_facebook_활성화.png" alt="" draggable="false">
                 <div class="account-title">
@@ -104,10 +105,13 @@
                     계정 연결 비활성화는 <a href="#">여기</a>를 클릭해 주세요
                 </div>
             </div>
-            <div class="account-box nugu-disabled">
-                <img src="/img/RESOURCE/Mypage/ic_nugu_png.png" alt="" draggable="false" width="49" height="113">
+            <div class="account-box nugu-box">
+                <img src="/img/RESOURCE/Mypage/ic_nugu_활성화.png" alt="" draggable="false" style="margin-bottom: 30px;">
                 <div class="account-title">
-                    누구 디바이스 연결하기
+                    누구 디바이스연결 <span>활성화</span>
+                </div>
+                <div class="account-reset">
+                    디바이스 연결 비활성화는 <a href="#">여기</a>를 클릭해 주세요
                 </div>
             </div>
         </section>
@@ -195,5 +199,17 @@
             </div>
         </section>
     </div>
-    <footer></footer>
+    <footer>
+              <div class="footer-logo">
+                <img src="/img/RESOURCE/CategoryResult/ic_tour_coach.png" alt="">
+              </div>
+              <div class="footer-index">
+                ©2017 CIRCLE TOURCOACH ALL RIGHT RESERVED. </br>
+                26. JONG-RO, JONGNO-GU, SEOUL</br>
+                SKT Smarteen App Challenge 2017
+              </div>
+              <div class="footer-icon">
+                <img src="/img/RESOURCE/CategoryResult/ic_skt.png" alt="">
+              </div>
+            </footer>
 @endsection

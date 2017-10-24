@@ -25,7 +25,7 @@
   border: 1px solid #ffe617;
 }
 .account .nugu-disabled{
-  border: 1px solid #57bbcd;
+  border: 1px solid #EB542D;
 }
 .account .fb-box{
   background-color: #3c5b9b;
@@ -35,7 +35,8 @@
   border: 1px solid #3c5b9b;
 }
 .account .nugu-box{
-  border: 1px solid #57bbcd;
+  background-color: #EB542D;
+  border: 1px solid #EB542D;
 }
 .account .account-box{
   width:24.5%;
@@ -54,6 +55,12 @@
 }
 .account .disabled{
   background-color: #fff;
+}
+.account .nugu-box .account-title{
+  color:#fff;
+}
+.account .nugu-box .account-reset{
+  color:#fff;
 }
 .account .google-box .account-title{
   color:#565656;
@@ -115,12 +122,13 @@
 }
 .attract .attract-box .attract-index{
   border: 1px solid lightgray;
-  padding-left: 1.3rem;
+  
 }
 .attract .attract-box .attract-index li{
+  padding-left: 1.3rem;
   display: flex;
   flex-direction: row;
-
+  border-bottom: 1px solid lightgray;
   height: 40px;
   align-items: center;
 }

@@ -1,5 +1,27 @@
 window.onload = function(){
     $("#loading").remove();
+    var slideNo = 0;
+    var slideBox = $("#slideBox");
+    // slide
+    slideBox.find(".btn").on("click",function(){
+        if(slideBox.find(".slide").is(":animated")) return false;
+        var no = $(this).index();
+        if( no == 1){
+            console.log(slideNo,slideBox.find(".slide").find("img").length*100 - 100);
+			if(slideNo < slideBox.find(".slide").find("img").length*100 - 100) {
+				
+                slideNo += 100;
+            }
+        }else{
+            if(slideNo > 0) {
+                slideNo -= 100;
+            }
+        }
+
+        slideBox.find(".slide").animate({"marginLeft":"-"+slideNo+"%"});
+    })
+
+
     var Apps = function(){
 
         var app = {
@@ -72,67 +94,7 @@ window.onload = function(){
         })
     })
 
-    var projectCount = [0, 0, 0, 0, 0];
-    var projectMargin = [0, 0, 0, 0, 0];
-
-
-
-    $(".rightBtn1").click(function(){
-        if(window.innerWidth < 600){
-            if(projectCount[0] > 3){
-
-            }
-            else{
-                projectMargin[0] += window.innerWidth/1*-1 - 25;
-                projectCount[0]++;
-                $(".a").animate({"margin-left":projectMargin[0]},1000)
-            }
-        }
-        else if(window.innerWidth > 1200){
-            if(projectCount[0] > 2){
-
-            }
-            else{
-                projectMargin[0] += window.innerWidth/4*-1;
-                projectCount[0]++;
-                $(".a").animate({"margin-left":projectMargin[0]},1000)
-            }
-        }
-        else{
-            if(projectCount[0] > 6){
-
-            }
-            else{
-                projectMargin[0] += window.innerWidth/4*-1;
-                projectCount[0]++;
-                $(".a").animate({"margin-left":projectMargin[0]},1000)
-            }
-        }
-    })
-
-    $(".leftBtn1").click(function(){
-        if(window.innerWidth < 600){
-
-            if(projectCount[0] == 0){
-
-            }
-            else{
-                projectMargin[0] += window.innerWidth/1 + 25;
-                projectCount[0]--;
-                $(".a").animate({"margin-left":projectMargin[0]},1000)
-            }
-        }
-        else{
-            if(projectCount[0] == 0){
-
-            }
-            else{
-                projectMargin[0] += window.innerWidth/4;
-                projectCount[0]--;
-                $(".a").animate({"margin-left":projectMargin[0]},1000)
-            }
-        }
-    })
+    
 }
 
 function sendKakao(tourId){

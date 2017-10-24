@@ -2,6 +2,7 @@
 
 @push('css')
     <link rel="stylesheet" href="/css/TravelRecommendations.css">
+    <link rel="stylesheet" href="/css/footer.css">
 @endpush
 
 @section('content')

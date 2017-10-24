@@ -169,17 +169,16 @@
         </section>
     </div>
     <footer>
-        <div class="footer-icon">
-            <img src="/img/RESOURCE/Main/ic_airplane.png" alt="" draggable="false">
-        </div>
-        <div class="footer-logo">
-            <img src="/img/RESOURCE/Main/ic_tour_coach.png" alt="" draggable="false">
-        </div>
-        <div class="null-box">
-            <!-- 기둥뒤에 공간있어요 -->
-        </div>
-        <div class="sk-logo">
-            <img src="" alt="" draggable="false">
-        </div>
-    </footer>
+              <div class="footer-logo">
+                <img src="/img/RESOURCE/CategoryResult/ic_tour_coach.png" alt="">
+              </div>
+              <div class="footer-index">
+                ©2017 CIRCLE TOURCOACH ALL RIGHT RESERVED. </br>
+                26. JONG-RO, JONGNO-GU, SEOUL</br>
+                SKT Smarteen App Challenge 2017
+              </div>
+              <div class="footer-icon">
+                <img src="/img/RESOURCE/CategoryResult/ic_skt.png" alt="">
+              </div>
+            </footer>
 @endsection

@@ -35,6 +35,10 @@ Route::post("/tour/sendKakao/{no}","TourController@sendKakao")->name("tourSendKa
 Route::post("/tour/getReview","TourController@getReview")->name("tourGetReview");
 // 검색 결과 뷰
 Route::get("/tour/searchResult","TourController@searchResult")->name("toursearchResultView");
+// 카테고리 뷰
+Route::get("/tour/category/{category}","TourController@category")->name("tourCategoryView");
+
+
 
 
 // @UserController
@@ -77,6 +81,8 @@ Route::get('/test/test2','TestController@test2')->name('Test2');
 Route::get('/test/send','TestController@send')->name('send');
 Route::get('/test/test','TestController@test')->name('TestPost');
 Route::get('/t','TestController@t')->name('T');
+Route::get('/naver','TestController@naver')->name('naver');
+Route::get('/kakao','TestController@kakao')->name('kako');
 
 // 날씨
 Route::get('/test/weather','TestController@weather')->name('tourcoachWeather');
